@@ -9,7 +9,9 @@ html(lang="ja")
     h1= title 
     #container
       p
-        | Twitter の [#ssに字幕を入れてオリジナルシーンを作ってみる](https://twitter.com/search?src=typd&q=%23ss%E3%81%AB%E5%AD%97%E5%B9%95%E3%82%92%E5%85%A5%E3%82%8C%E3%81%A6%E3%82%AA%E3%83%AA%E3%82%B8%E3%83%8A%E3%83%AB%E3%82%B7%E3%83%BC%E3%83%B3%E3%82%92%E4%BD%9C%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%8B) タグ用画像を簡単に作るためのページです。
+        | Twitter の
+        a("href=https://twitter.com/search?src=typd&q=%23ss%E3%81%AB%E5%AD%97%E5%B9%95%E3%82%92%E5%85%A5%E3%82%8C%E3%81%A6%E3%82%AA%E3%83%AA%E3%82%B8%E3%83%8A%E3%83%AB%E3%82%B7%E3%83%BC%E3%83%B3%E3%82%92%E4%BD%9C%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%8B") #ssに字幕を入れてオリジナルシーンを作ってみる
+        | タグ用画像を簡単に作るためのページです。
         br
         | 画像をドラッグアンドドロップでページに入れて、下のところで文字を入れて作ります。
         br
@@ -31,19 +33,20 @@ html(lang="ja")
             | マスク縦幅(今は自動):
             span(v-text="mask_height")
           p.caption
+            //-textarea(v-model="text")
             input(type="text", v-model="text")
+          p 連続でつくる（ファイル名が保持されません。）
+            input(type="checkbox", v-model="sequence")
           p
             input(type="button", value="これでつくる", v-on:click="edit")
-            textarea(value="これでつくる", v-on:click="edit")
             a(href="{{imageData}}", download="{{fileName}}") だうんろーど
-          p(v-html="data1")
-            //-img(src="{{imageDataForDownload}}")
         #thanks
           p 
             | 使用フォント 
             a(href="http://chiphead.jp/") しねまきゃぷしょん
         footer
-          p ツール自体を改造したいなら[ こちら ](https://github.com/pso2tasy/make_original_scene)。
+          p ツール自体を改造したいなら
+            a(href="https://github.com/pso2tasy/make_original_scene") こちら。
           p 
             | 何かあれば 
             a(href="https://www.twitter.com/pso2tasy") @pso2tasy
