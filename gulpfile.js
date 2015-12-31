@@ -23,16 +23,17 @@ var config = {
   jade: {
     src: ['src/jade/**/*.jade', '!src/jade/**/_*/**/*.jade'],
     dest: 'public/',
-    options: {pretty:false},
+    options: { pretty:false },
     isCompile: false
   },
   stylus: {
     src: ['src/stylus/*.styl', '!src/stylus/**/_*/**/*.styl'],
-    dest: 'public/css/'
+    dest: 'public/css/',
+    options: { compress: true }
   },
   javascript: {
     src: ['node_modules/vue/dist/vue.min.js', 'src/js/lib/**/*.js', 'src/js/*.js', '!src/js/**/_*/**/*.js'],
-    dest: 'public/js/'
+    dest: 'public/js/',
   },
   browserSync: {
     server: {
@@ -56,7 +57,7 @@ gulp.task('image', function() {
 
 gulp.task('stylus', function() {
   gulp.src(config.stylus.src)
-    .pipe(stylus())
+    .pipe(stylus(config.stylus.options))
     .pipe(concat('app.css'))
     .pipe(gulp.dest(config.stylus.dest));
   browserSync.reload();
@@ -78,12 +79,15 @@ gulp.task('javascript', function() {
 
 gulp.task('watch', ['file', 'image', 'jade', 'stylus', 'javascript'], function() {
   browserSync(config.browserSync);
+  config.jade.options.pretty = true;
+  config.stylus.options.compress = false;
   gulp.watch(config.file.src,   ['file']);
   gulp.watch(config.image.src,   ['image']);
   gulp.watch(config.jade.src,   ['jade']);
   gulp.watch(config.stylus.src, ['stylus']);
   gulp.watch(config.javascript.src, ['javascript']);
 });
+
 
 gulp.task('compile', ['file', 'image', 'jade', 'stylus', 'javascript']);
 

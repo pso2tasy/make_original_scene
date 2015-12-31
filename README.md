@@ -4,21 +4,21 @@
 この README は、主にWindows向けに書かれています。
 
 ## 必要なもの
-- OS
+- OS  
 		多分色々なんでも。手元では Windows 10 です。
-- [ nodejs ](https://nodejs.org/en/)
-		色々に使用。手元では 5.3.0 です。
+- [ nodejs ](https://nodejs.org/en/)  
+		色々に使用。手元では 5.3.0 です。  
 		コマンドラインで node -v してバージョンが出ればOK。
-- NPM
+- NPM  
 		nodejs を入れたら入っているはず……？
-- [ Python 2.7 ](https://www.python.org/download/releases/2.7/)
-		concatが使用。手元では 2.7 です。
+- [ Python 2.7 ](https://www.python.org/download/releases/2.7/)  
+		concatが使用。手元では 2.7 です。  
 		コマンドラインで python -v してバージョンが出ればOK。
-- [ Visual Studio Community 2015 Edition ](https://www.visualstudio.com/ja-jp/products/visual-studio-community-vs.aspx)
+- [ Visual Studio Community 2015 Edition ](https://www.visualstudio.com/ja-jp/products/visual-studio-community-vs.aspx)  
 		Windows では必要です。Windows 7/8.1 だと 2012/2013 だとかなんとか。
 
 ## 使いかた（Windwos 向け）
-1. git clone https://github.com/pso2tasy/make_original_scene.git
+1. git clone https://github.com/pso2tasy/make_original_scene.git  
 		または zip ダウンロードでお手元に。
 2. `cd make_original_scene`
 3. `npm install -g gulp`
@@ -27,21 +27,21 @@
 
 ## 改造等のしかた
 `src` の下にあるファイルを好きにいじって `gulp compile` すると良いです。  
-html は jade フォルダの下に拡張子 `.jade` で置かないと反映されません。
-css は stylus フォルダの下に拡張子 `.styl` で置かないと反映されません。
-Javascript は js フォルダの下に拡張子 `.js` で置かないと反映されません。
+html は jade フォルダの下に拡張子 `.jade` で置かないと反映されません。  
+css は stylus フォルダの下に拡張子 `.styl` で置かないと反映されません。  
+Javascript は js フォルダの下に拡張子 `.js` で置かないと反映されません。  
 
-これらの対応は gulpfile.js で設定されているので、gulp について調べれば簡単に変えられます。
-HTML は [ Jade ](http://jade-lang.com/) です。HTML が分かるなら簡単に覚えられます。
-CSS は [ Stylus ](http://stylus-lang.com/) です。CSS が分かるなら簡単に覚えられます。
-Javascript は [ vue.js ](http://jp.vuejs.org/) を少しだけ使っています。
+これらの対応は gulpfile.js で設定されているので、gulp について調べれば簡単に変えられます。  
+HTML は [ Jade ](http://jade-lang.com/) です。HTML が分かるなら簡単に覚えられます。  
+CSS は [ Stylus ](http://stylus-lang.com/) です。CSS が分かるなら簡単に覚えられます。  
+Javascript は [ vue.js ](http://jp.vuejs.org/) を少しだけ使っています。  
 
 ## 配布について
 ライセンスは [ MIT License ](https://ja.wikipedia.org/wiki/MIT_License)です。
 
 ## インストールがうまく行かない
 1. Python は 3.x.x じゃなくて 2.7 ですか？  
-		> Python (v2.7.10 recommended, v3.x.x is not supported)
+		> Python (v2.7.10 recommended, v3.x.x is not supported)  
 		> [nodejs/node-gyp](https://github.com/nodejs/node-gyp)
 
 		# 普段3系を使いたいなら、Python 2.7 だけ入れて npm でだけ使うと良いらしいです。
@@ -49,6 +49,6 @@ Javascript は [ vue.js ](http://jp.vuejs.org/) を少しだけ使っていま�
 
 2. [ Visual Studio Community 2015 Edition ](https://www.visualstudio.com/ja-jp/products/visual-studio-community-vs.aspx) はカスタムインストールしましたか？  
 		カスタムインストールで Visual C++ を入れるらしいです。
-		> Install Visual Studio Community 2015 Edition. (Custom Install, Select Visual C++ during the installation)
-		> [nodejs/node-gyp](https://github.com/nodejs/node-gyp)
+				> Install Visual Studio Community 2015 Edition. (Custom Install, Select Visual C++ during the installation)  
+				> [nodejs/node-gyp](https://github.com/nodejs/node-gyp)
 
