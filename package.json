@@ -1,0 +1,30 @@
+{
+  "name": "make_original_scene",
+  "version": "0.0.1",
+  "description": "#ssに字幕を入れてオリジナルシーンを作ってみる をお手軽にするためのWebサイト。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "pso2tasy",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pso2tasy/make_original_scene.git"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.10.1",
+    "concat": "^1.0.0",
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-jade": "^1.1.0",
+    "gulp-stylus": "^2.1.2",
+    "gulp-watch": "^4.3.5",
+    "jade": "^1.11.0",
+    "stylus": "^0.53.0",
+    "uglify": "^0.1.5"
+  },
+  "dependencies": {
+    "vue": "^1.0.13"
+  }
+}

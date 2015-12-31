@@ -1,0 +1,49 @@
+doctype html5
+html(lang="ja")
+  - title = "#ssに字幕を入れてオリジナルシーンを作ってみる 支援ツール"
+  head
+    title= title
+    link(rel="stylesheet", href="css/app.css")
+    meta(charset="UTF-8")
+  body
+    h1= title 
+    #container
+      p
+        | Twitter の #ssに字幕を入れてオリジナルシーンを作ってみる タグ用画像を簡単に作るためのページです。
+        br
+        | 画像をドラッグアンドドロップでページに入れて、下のところで文字を入れて作ります。
+        br
+        | …が、直接投稿できないので、画像は右クリックで保存するなどの手間がかかります。どうしましょうねー。
+      p
+        | 処理速度の関係で、Google Chrome の使用をお勧めします。次点は Firefox です。
+        br
+        | Microsoft Edge や Internet Explorer の場合は、画像を作成すると下に追加されるので、それを右クリックしてダウンロードしてください。
+        | その他のブラウザは分かりません。
+      #application
+        #debug(v-model="debug")
+        #workbench
+          canvas#canvas(v-model="canvas")
+        #control
+          p 
+            | コピーライト表記:
+            input(type="checkbox", v-model="copyright")
+            | /
+            | マスク縦幅(今は自動):
+            span(v-text="mask_height")
+          p.caption
+            input(type="text", v-model="text")
+          p
+            input(type="button", value="これでつくる", v-on:click="edit")
+            a(href="{{imageData}}", download="{{fileName}}") だうんろーど
+          p(v-html="data1")
+            //-img(src="{{imageDataForDownload}}")
+        #thanks
+          p 
+            | 使用フォント 
+            a(href="http://chiphead.jp/") しねまきゃぷしょん
+        footer
+          p 
+            | 何かあれば 
+            a(href="https://www.twitter.com/pso2tasy") @pso2tasy
+            | まで。
+    script(type="text/javascript", src="js/app.js")
