@@ -17,7 +17,7 @@ var config = {
     dest: 'public/file/'
   },
   icon: {
-    src: ['src/file/icon/**/*'],
+    src: ['src/file/icon/**/*.ico', 'src/file/icon/**/*.png'],
     dest: 'public'
   },
   jade: {
