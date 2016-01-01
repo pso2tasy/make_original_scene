@@ -30,17 +30,17 @@ html(lang="ja")
           canvas#canvas(v-model="canvas")
         #control
           p
-            input(type="checkbox", v-model="copyright")
-            | コピーライト（
-            span.copyright (C)SEGA
-            |）
-            input(type="checkbox", v-model="mask")
-            | マスクを入れる 幅 
+            input#copyright(type="checkbox", v-model="copyright")
+            label(for="copyright")
+              | コピーライト（
+              span.copyright (C)SEGA
+              |）
+            input#mask(type="checkbox", v-model="mask")
+            label(for="mask") マスクを入れる 幅 
             span(v-text="mask_height")
             | px
-            //- input(type="text",v-model="mask_height")
-            input(type="checkbox", v-model="sequence")
-            | 連続でつくる（ファイル名が保持されません。）
+            input#sequence(type="checkbox", v-model="sequence")
+            label(for="sequence") 連続でつくる（ファイル名が保持されません。）
           p.caption
             input(type="text", v-model="text")
           p
