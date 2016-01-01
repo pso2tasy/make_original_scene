@@ -45,9 +45,11 @@ var config = {
     reloadOnRestart: true
   }
 };
+var preservetime = require('gulp-preservetime');
 gulp.task('file', function() {
   gulp.src(config.file.src)
-    .pipe(gulp.dest(config.file.dest));
+    .pipe(gulp.dest(config.file.dest))
+    .pipe(preservetime());
 });
 
 gulp.task('image', function() {
