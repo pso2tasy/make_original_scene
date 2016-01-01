@@ -20,7 +20,8 @@ var app = function()
   };
   var copyright = function(canvas) {
     var ctx    = canvas.getContext('2d');
-    ctx.font = 'normal ' + parseInt(30 * ratio.height).toString() + 'px Century Gothic';
+    //ctx.font = 'normal ' + parseInt(30 * ratio.height).toString() + 'px Century Gothic';
+    ctx.font = 'normal ' + parseInt(30 * ratio.height).toString() + 'px Roboto';
     ctx.shadowBlur    = 0;
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 0;
@@ -28,7 +29,7 @@ var app = function()
     ctx.textBaseline  = 'end';
     ctx.fillStyle     = '#fff';
     console.log(canvas.height);
-    ctx.fillText('(C)SEGA', canvas.width - (10 * ratio.width), canvas.height - (10 * ratio.height));
+    ctx.fillText('(C)SEGA', canvas.width - (10 * ratio.width), canvas.height - (6 * ratio.height));
   };
   var caption = function(canvas) {
     var ctx    = canvas.getContext('2d');
@@ -72,17 +73,16 @@ var app = function()
       canvas: canvas,
       imageData: null,
       fileName: '',
-      downloadable: true
+      sequence: false
     },
     created: function(){ 
       var ua = window.navigator.userAgent.toLowerCase();
-      console.log(ua);
       if (ua.indexOf('edge') != -1) {
-        this.downloadable = false;
+        this.sequence = true;
       } else if (ua.indexOf('chrome') != -1){
-        this.downloadable = true;
+        this.sequence = false;
       } else if (ua.indexOf('firefox') != -1){
-        this.downloadable = true;
+        this.sequence = false;
       }
     },
     methods: {
@@ -90,14 +90,14 @@ var app = function()
         mask(canvas);
         caption(canvas);
         if(this.copyright) copyright(canvas);
-        if(this.downloadable) {
+        if(this.sequence === true) {
+          this.appendSequence(event);
+        } else {
           this.imageData = canvas.toDataURL();
           this.fileName  = canvas.file.name;
-        } else {
-          this.edit_ms_browser(event);
         }
       },
-      edit_ms_browser: function(event) {
+      appendSequence: function(event) {
         var image  = new Image();
         image.src    = canvas.toDataURL();
         image.width  = '640'; 

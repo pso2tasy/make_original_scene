@@ -3,6 +3,7 @@ html(lang="ja")
   - title = "#ssに字幕を入れてオリジナルシーンを作ってみる 支援ツール"
   head
     title= title
+    link(href="https://fonts.googleapis.com/css?family=Roboto",rel="stylesheet",type="text/css")
     link(rel="stylesheet", href="css/app.css")
     meta(charset="UTF-8")
   body
@@ -19,7 +20,12 @@ html(lang="ja")
       p
         | 処理速度の関係で、Google Chrome の使用をお勧めします。次点は Firefox です。
         br
-        | Microsoft Edge や Internet Explorer の場合は、画像を作成すると下に追加されるので、それを右クリックしてダウンロードしてください。
+        | 「だうんろーど」を押すと、最新の画像がアップロードした画像と同じ名前でダウンロードできます。
+      p
+        | Microsoft Edge や Internet Explorer の場合は、「連続でつくる」のみ対応です。
+        br
+        | 「だうんろーど」できませんので、右クリックから画像を保存してください。
+      p
         | その他のブラウザは分かりません。
       #application
         #debug(v-model="debug")
@@ -27,7 +33,9 @@ html(lang="ja")
           canvas#canvas(v-model="canvas")
         #control
           p 
-            | コピーライト表記:
+            | コピーライト（
+            span.copyright (C)SEGA
+            |）:
             input(type="checkbox", v-model="copyright")
             | /
             | マスク縦幅(今は自動):
