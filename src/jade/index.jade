@@ -19,13 +19,14 @@ html(lang="ja")
             br
             | 画像をドラッグアンドドロップでページに入れて、下のところで文字を入れて作ります。
             br
-            | …が、直接投稿できないので、画像を一旦保存する手間がかかります。どうしましょうねー。
+            | …が、直接投稿できないので、画像を保存する手間がかかります。どうしましょうねー。
           p
             | Google Chrome での使用をお勧めします。次点は Firefox 、「だうんろーど」に少し時間がかかります。
-          p(style="display:{{ms_warning}}")
-            | Microsoft Edge や Internet Explorer の場合は、「連続でつくる」のみ対応です。
-            br
-            | 「だうんろーど」できませんので、右クリックから画像を保存してください。
+            | これらのブラウザで上手くできない場合は、キャッシュを削除してみてください。
+          p
+            | Microsoft Edge や Internet Explorer むけの「だうんろーど」をためしに作りました。
+            | Firefox よりずっと早いです。
+          //- p(class="flipflop" v-bind:class="{'display_yes': msBrowser}")
         #debug(v-model="debug")
         #workbench
           canvas#canvas(v-model="canvas")
@@ -38,7 +39,7 @@ html(lang="ja")
               |）
             input#mask(type="checkbox", v-model="mask")
             label(for="mask") マスクを入れる 幅 
-            span(v-text="mask_height")
+            span(v-text="maskHeight")
             | px
             input#sequence(type="checkbox", v-model="sequence")
             label(for="sequence") 連続でつくる（ファイル名が保持されません。）
@@ -46,7 +47,9 @@ html(lang="ja")
             input(type="text", v-model="text")
           p
             input(type="button", value="これでつくる", v-on:click="edit")
-            a(href="{{imageData}}", download="{{fileName}}") だうんろーど
+            a(href="{{imageData}}", download="{{fileName}}" class="flipflop" v-bind:class="{'display_inline': !msBrowser}") だうんろーど
+            //- Microsoft Edge, Internet Explorer は download属性に対応していないのでこちら。
+            input(type="button", value="だうんろーど", v-on:click="msDownload" class="flipflop" v-bind:class="{'display_inline': msBrowser}")
         #thanks
           p 
             | 使用フォント 

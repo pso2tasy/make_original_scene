@@ -15,8 +15,8 @@ var app = function()
      ctx.shadowOffsetX = 0;
      ctx.shadowOffsetY = 0;
      ctx.fillStyle     = '#000';
-     ctx.fillRect(0, 0, canvas.width, vm.$data.mask_height);
-     ctx.fillRect(0, canvas.height, canvas.width, -vm.$data.mask_height);
+     ctx.fillRect(0, 0, canvas.width, vm.$data.maskHeight);
+     ctx.fillRect(0, canvas.height, canvas.width, -vm.$data.maskHeight);
   };
   var copyright = function(canvas) {
     var ctx    = canvas.getContext('2d');
@@ -44,7 +44,7 @@ var app = function()
       ctx.shadowBlur    = blur;
       ctx.shadowOffsetX = offsetX;
       ctx.shadowOffsetY = offsetY;
-      ctx.fillText(vm.$data.text, canvas.width / 2, canvas.height - vm.$data.mask_height - (20 * ratio.height));
+      ctx.fillText(vm.$data.text, canvas.width / 2, canvas.height - vm.$data.maskHeight - (20 * ratio.height));
     };
     stroke(3, 3, 0);
     stroke(3, -3, 0);
@@ -59,7 +59,7 @@ var app = function()
     ratio.height = canvas.height / ratio.base.height;
     ratio.width  = canvas.width / ratio.base.width;
     // 1080 に対して70 の比率をもとにしているので。
-    vm.$data.mask_height = parseInt(canvas.height * 70 / 1080);
+    vm.$data.maskHeight = parseInt(canvas.height * 70 / 1080);
   };
 
   // ドラッグアンドドロップで画像を読み込む処理を追加。
@@ -71,37 +71,42 @@ var app = function()
       text: 'ここに文字を入れます。',
       copyright  : true, // (C)SEGA を入れるかどうか
       mask       : true, // 上下の黒帯 を入れるかどうか
-      mask_height: 70,   // 上下の黒帯 px 
+      maskHeight: 70,   // 上下の黒帯 px 
       canvas     : canvas,
       imageData  : null,
       fileName   : '',
       sequence   : false,
-      ms_warning : 'none'
+      msBrowser  : false,
     },
     created: function(){ 
       var ua = window.navigator.userAgent.toLowerCase();
       if (ua.indexOf('edge') != -1) {
-        this.sequence = true;
-        this.ms_warning = 'normal';
+        this.msBrowser = true;
       } else if (ua.indexOf('chrome') != -1){
-        this.sequence = false;
       } else if (ua.indexOf('firefox') != -1){
-        this.sequence = false;
       } else {
+        this.msBrowser = true;
         this.sequence = true;
-        this.ms_warning = 'normal';
       }
     },
     methods: {
       edit: function(event) {
         if(this.mask) mask(canvas);
         caption(canvas);
+        this.fileName  = canvas.file.name;
         if(this.copyright) copyright(canvas);
         if(this.sequence === true) {
           this.appendSequence(event);
-        } else {
+        }
+        if(this.msBrowser === false) {
           this.imageData = canvas.toDataURL();
-          this.fileName  = canvas.file.name;
+        }
+      },
+      msDownload: function(event) {
+        var blob = this.canvas.msToBlob();
+        if (window.navigator.msSaveBlob) {
+          console.log(this.fileName);
+          window.navigator.msSaveOrOpenBlob(blob, this.fileName);
         }
       },
       appendSequence: function(event) {
