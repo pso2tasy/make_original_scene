@@ -1,3 +1,10 @@
+contentWidth     = 1040px
+applicationWidth = 1040px
+canvasWidth      = 960px
+
+accentColorBlue  = #99f
+//- accentColorRed   = #d13081
+
 @font-face
   font-family 'cinecaption'
   src local('cinecaption'), url('../file/font/cinecaption2.28.ttf')  format('truetype') 
@@ -13,9 +20,9 @@ body, div, footer
 a
   text-decoration none
 a:link
-  color #99f
+  color accentColorBlue
 a:hover
-  color #99f
+  color accentColorBlue
 a:visited
   color #000
 html, body
@@ -27,31 +34,68 @@ body
 h1
   font-size 2em
   background-color #000
-  color #99f
+  color accentColorBlue
   margin 0
   padding 0.5em 0 1em 1em
 #container
-  padding 1em 4em
-  margin 0 4em
+  width            contentWidth
+  padding          1em 4em
+  margin           0 auto
   background-color #fff
-  line-height 1.5
+  line-height      1.55
+#description
+  width      canvasWidth
+  text-align left
+  margin     0 auto 1em auto
+  p
+    margin 0 0 1em 0
 #application
-  text-align center
+  width = applicationWidth
 #canvas
-  width  640px
-  height 360px
+  display block
+  width   canvasWidth
+  height  540px
+  margin  0 auto
   background-color #000
 
 #control
+  width   canvasWidth
   text-align center
+  margin  0 auto
   input
     font-family 'cinecaption'
     font-size 14px
     border-radius 5px 5px
-    border 2px #99f solid
+    border 2px accentColorBlue solid
     padding 4px
     background-color #fff
     margin 0em 1em
+  input[type=checkbox]
+    cursor pointer
+    margin  0 0 0 1em
+    padding 0
+    width   1.3em
+    height  1.3em
+    vertical-align bottom
+  input[type=checkbox]:checked
+    //- border-right  3px solid #53b300;
+    //- border-bottom 3px solid #53b300;
+    //- transition: opacity 0.2s linear;
+    //- content: '';
+    //- opacity: 0;
+    //- -webkit-transform: rotate(45deg);
+    //- -ms-transform: rotate(45deg);
+    //- transform: rotate(45deg);
+  input[type=radio]:checked + .radio
+    box-sizing: border-box;
+    transition: background-color 0.2s linear;
+    display: inline-block;
+    margin: 0 20px 8px 0;
+    padding: 12px 12px 12px 42px;
+    border-radius: 8px;
+    background-color: #f6f7f8;
+    vertical-align: middle;
+    cursor: pointer;
   .caption
     input
       background-color #dfdfdf
@@ -63,11 +107,21 @@ h1
     font-family 'cinecaption'
     font-size 14px
     border-radius 5px 5px
-    border 2px #99f solid
+    border 2px accentColorBlue solid
     padding 4px
     background-color #fff
     margin 0em 1em
+  a.download
+    cursor pointer
+    a:link
+      color #000
+    a:hover
+      color accentColorBlue
+    a:visited
+      cursor pointer
 #thanks
+  text-align center
   padding 0 1em 0 0
 footer
+  text-align center
   padding 0 1em 1em 0

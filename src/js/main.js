@@ -68,26 +68,32 @@ var app = function()
     el: '#application',
     data: {
       text: 'ここに文字を入れます。',
-      copyright: true, // (C)SEGA を入れるかどうか
-      mask_height: 70,  // 上下の黒帯 px 
-      canvas: canvas,
-      imageData: null,
-      fileName: '',
-      sequence: false
+      copyright  : true, // (C)SEGA を入れるかどうか
+      mask       : true, // 上下の黒帯 を入れるかどうか
+      mask_height: 70,   // 上下の黒帯 px 
+      canvas     : canvas,
+      imageData  : null,
+      fileName   : '',
+      sequence   : false,
+      ms_warning : 'none'
     },
     created: function(){ 
       var ua = window.navigator.userAgent.toLowerCase();
       if (ua.indexOf('edge') != -1) {
         this.sequence = true;
+        this.ms_warning = 'normal';
       } else if (ua.indexOf('chrome') != -1){
         this.sequence = false;
       } else if (ua.indexOf('firefox') != -1){
         this.sequence = false;
+      } else {
+        this.sequence = true;
+        this.ms_warning = 'normal';
       }
     },
     methods: {
       edit: function(event) {
-        mask(canvas);
+        if(this.mask) mask(canvas);
         caption(canvas);
         if(this.copyright) copyright(canvas);
         if(this.sequence === true) {
