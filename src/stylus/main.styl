@@ -2,6 +2,8 @@ contentWidth     = 1040px
 applicationWidth = 1040px
 canvasWidth      = 960px
 
+fontMainColor    = #000
+
 accentColorBlue  = #99f
 //- accentColorRed   = #d13081
 
@@ -24,7 +26,7 @@ a:link
 a:hover
   color accentColorBlue
 a:visited
-  color #000
+  color fontMainColor
 html, body
   height 100%
 body
@@ -95,14 +97,14 @@ h1
     padding 4px
     background-color #fff
     margin 0em 1em
-  a.download
     cursor pointer
-    a:link
-      color #000
-    a:hover
-      color accentColorBlue
-    a:visited
-      cursor pointer
+  a:link
+    color accentColorBlue
+  a:hover
+    color accentColorBlue
+  a:visited
+    color  fontMainColor
+    cursor pointer
 #thanks
   text-align center
   padding 0 1em 0 0
