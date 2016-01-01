@@ -3,7 +3,7 @@
  *   callback:
  *     drop: drop 処理後に呼ばれるコールバック関数
  */
-var dond = function(canvas, option)
+var dragOnDrop = function(canvas, option)
 {
   window.addEventListener("dragover", function(evt) {
     // デフォルト処理をOFF

@@ -62,7 +62,8 @@ var app = function()
     vm.$data.mask_height = parseInt(canvas.height * 70 / 1080);
   };
 
-  dond(canvas, {callback:{onload: afterDrop}});
+  // ドラッグアンドドロップで画像を読み込む処理を追加。
+  dragOnDrop(canvas, {callback:{onload: afterDrop}});
 
   var vm = new Vue({
     el: '#application',

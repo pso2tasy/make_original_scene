@@ -21,7 +21,7 @@ html(lang="ja")
             br
             | …が、直接投稿できないので、画像を一旦保存する手間がかかります。どうしましょうねー。
           p
-            | Google Chrome での使用をお勧めします。次点は Firefox です。
+            | Google Chrome での使用をお勧めします。次点は Firefox 、「だうんろーど」に少し時間がかかります。
           p(style="display:{{ms_warning}}")
             | Microsoft Edge や Internet Explorer の場合は、「連続でつくる」のみ対応です。
             br
@@ -46,7 +46,7 @@ html(lang="ja")
             input(type="text", v-model="text")
           p
             input(type="button", value="これでつくる", v-on:click="edit")
-            a(href="{{imageData}}", download="{{fileName}}", class="download1") だうんろーど
+            a(href="{{imageData}}", download="{{fileName}}") だうんろーど
         #thanks
           p 
             | 使用フォント 
