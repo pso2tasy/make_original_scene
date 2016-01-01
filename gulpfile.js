@@ -13,12 +13,12 @@ gulp.task('default', function() {
 // ----------------------------------------------------------------------------
 var config = {
   file: {
-    src: ['src/file/**/*'],
+    src: ['src/file/**/*', '!src/file/icon/*'],
     dest: 'public/file/'
   },
-  image: {
-    src: ['src/img/**/*'],
-    dest: 'public/img/'
+  icon: {
+    src: ['src/file/icon/**/*'],
+    dest: 'public'
   },
   jade: {
     src: ['src/jade/**/*.jade', '!src/jade/**/_*/**/*.jade'],
@@ -46,15 +46,13 @@ var config = {
   }
 };
 var preservetime = require('gulp-preservetime');
-gulp.task('file', function() {
+gulp.task('staticFile', function() {
   gulp.src(config.file.src)
     .pipe(gulp.dest(config.file.dest))
     .pipe(preservetime());
-});
-
-gulp.task('image', function() {
-  gulp.src(config.image.src)
-    .pipe(gulp.dest(config.image.dest));
+  gulp.src(config.icon.src)
+    .pipe(gulp.dest(config.icon.dest))
+    .pipe(preservetime());
 });
 
 gulp.task('stylus', function() {
@@ -79,17 +77,16 @@ gulp.task('javascript', function() {
   browserSync.reload();
 });
 
-gulp.task('watch', ['file', 'image', 'jade', 'stylus', 'javascript'], function() {
+gulp.task('watch', ['staticFile', 'jade', 'stylus', 'javascript'], function() {
   browserSync(config.browserSync);
   config.jade.options.pretty = true;
   config.stylus.options.compress = false;
-  gulp.watch(config.file.src,   ['file']);
-  gulp.watch(config.image.src,   ['image']);
+  gulp.watch(config.file.src,   ['staticFile']);
   gulp.watch(config.jade.src,   ['jade']);
   gulp.watch(config.stylus.src, ['stylus']);
   gulp.watch(config.javascript.src, ['javascript']);
 });
 
 
-gulp.task('compile', ['file', 'image', 'jade', 'stylus', 'javascript']);
+gulp.task('compile', ['staticFile', 'jade', 'stylus', 'javascript']);
 
