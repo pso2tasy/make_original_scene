@@ -3,7 +3,7 @@
  *   callback:
  *     drop: drop 処理後に呼ばれるコールバック関数
  */
-var dragOnDrop = function(canvas, option)
+var dragOnDrop = function(image, canvas, option)
 {
   window.addEventListener("dragover", function(evt) {
     // デフォルト処理をOFF
@@ -18,17 +18,12 @@ var dragOnDrop = function(canvas, option)
 
     if (!file.type.match(/^image\/(png|jpeg|gif)$/)) return;
 
-    var image  = new Image();
     var reader = new FileReader();
     reader.readAsDataURL(file);
 
     reader.onload = function(evt) {
       image.onload = function() {
-        canvas.width  = image.width;
-        canvas.height = image.height;
-        canvas.file = file;
-        ctx.drawImage(image, 0, 0);
-        if(option.callback.onload !== 'undefined') option.callback.onload(canvas);
+        if(option.callback.onload !== 'undefined') option.callback.onload(image, file);
       }
       image.src = evt.target.result;
     }

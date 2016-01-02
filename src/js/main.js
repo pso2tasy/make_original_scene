@@ -1,6 +1,8 @@
 var app = function()
 {
- var ratio = {
+  var vintageApi;
+  var image  = new Image();
+  var ratio  = {
     width:  1,
     height: 1,
     base: {
@@ -8,6 +10,7 @@ var app = function()
       height: 720
     }
   };
+
   var canvas = document.getElementById('canvas');
   var mask   = function(canvas) {
      var ctx    = canvas.getContext('2d');
@@ -55,15 +58,21 @@ var app = function()
     stroke(10, 0, 0);
     stroke(10, 0, 0);
   };
-  var afterDrop = function(canvas){
+  var afterDrop = function(image, file){
+     var ctx    = canvas.getContext('2d');
+        canvas.width  = image.width;
+        canvas.height = image.height;
+        canvas.file = file;
+        ctx.drawImage(image, 0, 0);
     ratio.height = canvas.height / ratio.base.height;
     ratio.width  = canvas.width / ratio.base.width;
     // 1080 に対して70 の比率をもとにしているので。
     vm.$data.maskHeight = parseInt(canvas.height * 70 / 1080);
+    vintageApi = new VintageJS(image);
   };
 
   // ドラッグアンドドロップで画像を読み込む処理を追加。
-  dragOnDrop(canvas, {callback:{onload: afterDrop}});
+  dragOnDrop(image, canvas, {callback:{onload: afterDrop}});
 
   var vm = new Vue({
     el: '#application',
@@ -89,6 +98,34 @@ var app = function()
       }
     },
     methods: {
+      effect: function(type) {
+        switch(type) {
+          case 'sample':
+            vintageApi.vintage({noise: 60,contrast: 50,desaturate: 0.4,brightness: -50,vignette: 1});
+            break;
+          case 'vignette':
+            vintageApi.vintage({vignette: 1});
+            break;
+          case 'contrast+':
+            vintageApi.vintage({contrast: 5});
+            break;
+          case 'desaturate':
+            vintageApi.vintage({desaturate: 0.2});
+            break;
+          case 'brightness+':
+            vintageApi.vintage({brightness: 10});
+            break;
+          case 'brightness-':
+            vintageApi.vintage({brightness: -10});
+            break;
+          case 'noise':
+            vintageApi.vintage({noise: 40});
+            break;
+          case 'reset':
+            vintageApi.reset();
+            break;
+        }
+      },
       edit: function(event) {
         if(this.mask) mask(canvas);
         caption(canvas);

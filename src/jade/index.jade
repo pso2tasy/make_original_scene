@@ -20,36 +20,38 @@ html(lang="ja")
             | 画像をドラッグアンドドロップでページに入れて、下のところで文字を入れて作ります。
             br
             | …が、直接投稿できないので、画像を保存する手間がかかります。どうしましょうねー。
-          p
-            | Google Chrome での使用をお勧めします。次点は Firefox 、「だうんろーど」に少し時間がかかります。
-            | これらのブラウザで上手くできない場合は、キャッシュを削除してみてください。
-          p
-            | Microsoft Edge や Internet Explorer むけの「だうんろーど」をためしに作りました。
-            | Firefox よりずっと早いです。
+          p 
+            | 上手くできない場合は、キャッシュを削除してみてください。
+            | 時々本当に壊れてるので、その時は教えてください……。
           //- p(class="flipflop" v-bind:class="{'display_yes': msBrowser}")
         #debug(v-model="debug")
         #workbench
           canvas#canvas(v-model="canvas")
         #control
-          p
-            input#copyright(type="checkbox", v-model="copyright")
-            label(for="copyright")
-              | コピーライト（
-              span.copyright (C)SEGA
-              |）
-            input#mask(type="checkbox", v-model="mask")
-            label(for="mask") マスクを入れる 幅 
-            span(v-text="maskHeight")
-            | px
-            input#sequence(type="checkbox", v-model="sequence")
-            label(for="sequence") 連続でつくる（ファイル名が保持されません。）
-          p.caption
-            input(type="text", v-model="text")
-          p
+          #filter
+            input(type="button", value="みほん", v-on:click="effect('sample')")
+            input(type="button", value="あやしげ", v-on:click="effect('vignette')")
+            input(type="button", value="めりはり", v-on:click="effect('contrast+')")
+            input(type="button", value="かげうす", v-on:click="effect('desaturate')")
+            input(type="button", value="あかるく", v-on:click="effect('brightness+')")
+            input(type="button", value="くらく", v-on:click="effect('brightness-')")
+            input(type="button", value="のいず", v-on:click="effect('noise')")
+          #makeIt
+            #caption
+              input(type="text", v-model="text")
             input(type="button", value="これでつくる", v-on:click="edit")
+            input(type="button", value="もじけし", v-on:click="effect('reset')")
             a(href="{{imageData}}", download="{{fileName}}" class="flipflop" v-bind:class="{'display_inline': !msBrowser}") だうんろーど
             //- Microsoft Edge, Internet Explorer は download属性に対応していないのでこちら。
             input(type="button", value="だうんろーど", v-on:click="msDownload" class="flipflop" v-bind:class="{'display_inline': msBrowser}")
+          #setting
+            input#copyright(type="checkbox", v-model="copyright")
+            label(for="copyright")
+              span.copyright (C)SEGA
+            input#mask(type="checkbox", v-model="mask")
+            label(for="mask") ますく
+            input#sequence(type="checkbox", v-model="sequence")
+            label(for="sequence") れんぞく（ファイル名が保持されません。）
         #thanks
           p 
             | 使用フォント 

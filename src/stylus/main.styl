@@ -8,6 +8,7 @@ subColor         = #000
 fontMainColor    = #000
 
 accentColorBlue  = #99f
+accentColorGreen  = #9c9
 //- accentColorRed   = #d13081
 
 @font-face
@@ -50,7 +51,7 @@ h1
   padding 0.5em 0 1em 1em
 #container
   width            contentWidth
-  padding          1em 4em
+  padding          1em 0
   margin           0 auto
   background-color mainColor
   line-height      1.55
@@ -72,7 +73,7 @@ h1
 #control
   width   canvasWidth
   text-align center
-  margin  0 auto
+  margin  0 auto 1em auto
   input
     font-family 'cinecaption'
     font-size 14px
@@ -81,42 +82,59 @@ h1
     padding 4px
     background-color mainColor
     margin 0em 1em
-  input[type=checkbox]
     cursor pointer
-    margin  0 0 0 1em
-    padding 0
-    width   1.3em
-    height  1.3em
-    vertical-align bottom
-  label
-    cursor pointer
-  input[type=checkbox]:checked
-  .caption
+  #filter
+    margin 0.5em 0em;
     input
-      background-color #dfdfdf
-      padding 0.3em
-      margin 0
-      border-radius 0 0
-      width 35em
-  a
-    font-family 'cinecaption'
-    font-size 14px
-    border-radius 5px 5px
-    border 2px accentColorBlue solid
-    padding 4px
-    background-color mainColor
-    margin 0em 1em
-    cursor pointer
-  a:link
-    color accentColorBlue
-  a:hover
-    color accentColorBlue
-  a:visited
-    color  fontMainColor
-    cursor pointer
+      border 2px accentColorGreen solid
+  #makeIt
+    margin 0.5em 0em;
+    input
+      margin 0em .5em
+      border-radius 5px
+    #caption
+      input[type=text]
+        cursor text
+        background-color #dfdfdf
+        margin 0.5em 0 0.5em 0
+        padding 0.3em
+        width 35em
+    a
+      font-family 'cinecaption'
+      font-size 14px
+      border-radius 5px
+      border 2px accentColorBlue solid
+      padding 4px
+      background-color mainColor
+      margin 0em 1em
+      cursor pointer
+    a:link
+      color  fontMainColor
+      color accentColorBlue
+    a:hover
+      color  fontMainColor
+      color accentColorBlue
+    a:visited
+      background-color mainColor
+      color  fontMainColor
+      cursor pointer
+  #setting
+    margin 0.5em 0em;
+    input[type=checkbox]
+      cursor pointer
+      margin  0 0 0 1em
+      padding 0
+      width   1.3em
+      height  1.3em
+      vertical-align bottom
+    label
+      cursor pointer
+    //-input[type=checkbox]:checked
 #thanks
   text-align center
+  margin  2em 0 0 0
   padding 0 1em 0 0
 footer
   text-align center
   padding 0 1em 1em 0
+  margin  1em 0 0 0
