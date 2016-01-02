@@ -23,7 +23,7 @@ html(lang="ja")
           p 
             | 上手くできない場合は、キャッシュを削除してみてください。
             | 時々本当に壊れてるので、その時は教えてください……。
-          //- p(class="flipflop" v-bind:class="{'display_yes': msBrowser}")
+          //- p(class="flipflop" v-bind:class="{'display_inline': msBrowser}")
         #debug(v-model="debug")
         #workbench
           canvas#canvas(v-model="canvas")
@@ -55,7 +55,7 @@ html(lang="ja")
         #thanks
           p 
             | 使用フォント 
-            a(href="http://chiphead.jp/") しねまきゃぷしょん
+            a(href="http://chiphead.jp/") しねきゃぷしょん
         footer
           p ツール自体を改造したいなら
             a(href="https://github.com/pso2tasy/make_original_scene") こちら。
