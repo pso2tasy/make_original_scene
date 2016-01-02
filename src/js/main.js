@@ -86,7 +86,6 @@ var app = function()
       } else if (ua.indexOf('firefox') != -1){
       } else {
         this.msBrowser = true;
-        this.sequence = true;
       }
     },
     methods: {
