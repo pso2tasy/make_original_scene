@@ -119,7 +119,7 @@ var app = function()
             vintageApi.vintage({brightness: -10});
             break;
           case 'noise':
-            vintageApi.vintage({noise: 40});
+            vintageApi.vintage({noise: 30});
             break;
           case 'reset':
             vintageApi.reset();
