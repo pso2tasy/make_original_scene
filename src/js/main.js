@@ -77,24 +77,27 @@ var app = function()
   var vm = new Vue({
     el: '#application',
     data: {
-      text: 'ここに文字を入れます。',
-      copyright  : true, // (C)SEGA を入れるかどうか
-      mask       : true, // 上下の黒帯 を入れるかどうか
-      maskHeight: 70,   // 上下の黒帯 px 
-      canvas     : canvas,
-      imageData  : null,
-      fileName   : '',
-      sequence   : false,
-      msBrowser  : false,
+      text          : 'ここに文字を入れます。',
+      copyright     : true, // (C)SEGA を入れるかどうか
+      mask          : true, // 上下の黒帯 を入れるかどうか
+      maskHeight    : 70,   // 上下の黒帯 px 
+      canvas        : canvas,
+      imageData     : null,
+      fileName      : '',
+      toJpeg        : true,
+      sequence      : false,
+      msBrowser     : false,
     },
     created: function(){ 
       var ua = window.navigator.userAgent.toLowerCase();
       if (ua.indexOf('edge') != -1) {
         this.msBrowser = true;
+        this.toJpeg    = false;
       } else if (ua.indexOf('chrome') != -1){
       } else if (ua.indexOf('firefox') != -1){
       } else {
         this.msBrowser = true;
+        this.toJpeg    = false;
       }
     },
     methods: {
@@ -126,22 +129,35 @@ var app = function()
             break;
         }
       },
+      fileType: function() {
+        if(this.toJpeg == true) {
+          return 'image/jpeg';
+        }
+        return 'image/png';
+      },
+      changeExt: function(fileName) {
+        if(this.toJpeg == true) {
+          return fileName.replace(/.png$/, '.jpg');
+        }
+        fileName.replace(/.jpg$/, '.png');
+        fileName.replace(/.jpeg$/, '.png');
+        return fileName;
+      },
       edit: function(event) {
         if(this.mask) mask(canvas);
         caption(canvas);
-        this.fileName  = canvas.file.name;
+        this.fileName  = this.changeExt(canvas.file.name);
         if(this.copyright) copyright(canvas);
         if(this.sequence === true) {
           this.appendSequence(event);
         }
         if(this.msBrowser === false) {
-          this.imageData = canvas.toDataURL();
+          this.imageData = canvas.toDataURL(this.fileType());
         }
       },
       msDownload: function(event) {
         var blob = this.canvas.msToBlob();
         if (window.navigator.msSaveBlob) {
-          console.log(this.fileName);
           window.navigator.msSaveOrOpenBlob(blob, this.fileName);
         }
       },
