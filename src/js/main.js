@@ -87,6 +87,7 @@ var app = function()
       toJpeg        : true,
       sequence      : false,
       msBrowser     : false,
+      downloadReady : false,
     },
     created: function(){ 
       var ua = window.navigator.userAgent.toLowerCase();
@@ -154,6 +155,7 @@ var app = function()
         if(this.msBrowser === false) {
           this.imageData = canvas.toDataURL(this.fileType());
         }
+        this.downloadReady = true;
       },
       msDownload: function(event) {
         var blob = this.canvas.msToBlob();
