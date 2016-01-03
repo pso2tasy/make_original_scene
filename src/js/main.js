@@ -30,7 +30,7 @@ var app = function()
     ctx.shadowOffsetY = 0;
     ctx.textAlign     = 'right';
     ctx.textBaseline  = 'end';
-    ctx.fillStyle     = '#fff';
+    ctx.fillStyle     = '#dfdfdf';
     console.log(canvas.height);
     ctx.fillText('(C)SEGA', canvas.width - (10 * ratio.width), canvas.height - (6 * ratio.height));
   };
