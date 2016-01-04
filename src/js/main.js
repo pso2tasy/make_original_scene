@@ -1,5 +1,4 @@
-var app = function()
-{
+var app = function() {
   var vintageApi;
   var image  = new Image();
   var ratio  = {
@@ -18,8 +17,8 @@ var app = function()
      ctx.shadowOffsetX = 0;
      ctx.shadowOffsetY = 0;
      ctx.fillStyle     = '#000';
-     ctx.fillRect(0, 0, canvas.width, vm.$data.maskHeight);
-     ctx.fillRect(0, canvas.height, canvas.width, -vm.$data.maskHeight);
+     ctx.fillRect(0, 0, canvas.width, vm.maskHeight);
+     ctx.fillRect(0, canvas.height, canvas.width, -vm.maskHeight);
   };
   var copyright = function(canvas) {
     var ctx    = canvas.getContext('2d');
@@ -47,7 +46,7 @@ var app = function()
       ctx.shadowBlur    = blur;
       ctx.shadowOffsetX = offsetX;
       ctx.shadowOffsetY = offsetY;
-      ctx.fillText(vm.$data.text, canvas.width / 2, canvas.height - vm.$data.maskHeight - (20 * ratio.height));
+      ctx.fillText(vm.text, canvas.width / 2, canvas.height - vm.maskHeight - (20 * ratio.height));
     };
     stroke( 3,  3,  0);
     stroke( 3, -3,  0);
@@ -58,21 +57,18 @@ var app = function()
     stroke(10,  0,  0);
     stroke(10,  0,  0);
   };
-  var afterDrop = function(canvas, image, file){
-    var ctx       = canvas.getContext('2d');
+  var loadImage = function(canvas, image, file){
     canvas.width  = image.width;
     canvas.height = image.height;
     canvas.file   = file;
+    var ctx       = canvas.getContext('2d');
     ctx.drawImage(image, 0, 0);
     ratio.height = canvas.height / ratio.base.height;
     ratio.width  = canvas.width / ratio.base.width;
     // 1080 に対して70 の比率をもとにしているので。
-    vm.$data.maskHeight = parseInt(canvas.height * 70 / 1080);
+    vm.maskHeight = parseInt(canvas.height * 70 / 1080);
     vintageApi = new VintageJS(image);
   };
-
-  // ドラッグアンドドロップで画像を読み込む処理を追加。
-  dragOnDrop(canvas, image, {callback:{onload: afterDrop}});
 
   var vm = new Vue({
     el: '#application',
@@ -89,7 +85,7 @@ var app = function()
       msBrowser     : false,
       downloadReady : false,
     },
-    created: function(){ 
+    created: function() {
       var ua = window.navigator.userAgent.toLowerCase();
       if (ua.indexOf('edge') != -1) {
         this.msBrowser = true;
@@ -170,8 +166,16 @@ var app = function()
         image.height = '360';
         document.getElementById('control').appendChild(image);
       },
-    }
+    },
   });
 
+  // ドラッグアンドドロップで画像を読み込む処理を追加。
+  dragOnDrop(canvas, image, {callback:{onload: loadImage}});
+
+  var welcome = new Image();
+  welcome.onload = function() {
+    loadImage(canvas, welcome, {});
+  };
+  welcome.src = "./file/img/welcome.jpg";
 }();
 
