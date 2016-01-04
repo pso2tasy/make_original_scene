@@ -1,6 +1,6 @@
 {
   "name": "make_original_scene",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "#ssに字幕を入れてオリジナルシーンを作ってみる をお手軽にするためのWebサイト。",
   "main": "index.js",
   "scripts": {
