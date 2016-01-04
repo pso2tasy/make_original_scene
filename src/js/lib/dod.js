@@ -3,7 +3,7 @@
  *   callback:
  *     drop: drop 処理後に呼ばれるコールバック関数
  */
-var dragOnDrop = function(image, canvas, option)
+var dragOnDrop = function(canvas, image, option)
 {
   window.addEventListener("dragover", function(evt) {
     // デフォルト処理をOFF
@@ -23,7 +23,7 @@ var dragOnDrop = function(image, canvas, option)
 
     reader.onload = function(evt) {
       image.onload = function() {
-        if(option.callback.onload !== 'undefined') option.callback.onload(image, file);
+        if(option.callback.onload !== 'undefined') option.callback.onload(canvas, image, file);
       }
       image.src = evt.target.result;
     }

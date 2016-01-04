@@ -49,21 +49,21 @@ var app = function()
       ctx.shadowOffsetY = offsetY;
       ctx.fillText(vm.$data.text, canvas.width / 2, canvas.height - vm.$data.maskHeight - (20 * ratio.height));
     };
-    stroke(3, 3, 0);
-    stroke(3, -3, 0);
-    stroke(3, 0, 3);
-    stroke(3, 0, -3);
-    stroke(10, 0, 0);
-    stroke(10, 0, 0);
-    stroke(10, 0, 0);
-    stroke(10, 0, 0);
+    stroke( 3,  3,  0);
+    stroke( 3, -3,  0);
+    stroke( 3,  0,  3);
+    stroke( 3,  0, -3);
+    stroke(10,  0,  0);
+    stroke(10,  0,  0);
+    stroke(10,  0,  0);
+    stroke(10,  0,  0);
   };
-  var afterDrop = function(image, file){
-     var ctx    = canvas.getContext('2d');
-        canvas.width  = image.width;
-        canvas.height = image.height;
-        canvas.file = file;
-        ctx.drawImage(image, 0, 0);
+  var afterDrop = function(canvas, image, file){
+    var ctx       = canvas.getContext('2d');
+    canvas.width  = image.width;
+    canvas.height = image.height;
+    canvas.file   = file;
+    ctx.drawImage(image, 0, 0);
     ratio.height = canvas.height / ratio.base.height;
     ratio.width  = canvas.width / ratio.base.width;
     // 1080 に対して70 の比率をもとにしているので。
@@ -72,7 +72,7 @@ var app = function()
   };
 
   // ドラッグアンドドロップで画像を読み込む処理を追加。
-  dragOnDrop(image, canvas, {callback:{onload: afterDrop}});
+  dragOnDrop(canvas, image, {callback:{onload: afterDrop}});
 
   var vm = new Vue({
     el: '#application',
