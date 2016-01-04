@@ -142,30 +142,38 @@ var app = function() {
       add2ndLine: function() {
         this.display2ndLine = true;
       },
-      fileType: function() {
-        if(this.toJpeg == true) {
-          return 'image/jpeg';
-        }
-        return 'image/png';
-      },
-      changeExt: function(fileName) {
-        if(this.toJpeg == true) {
-          return fileName.replace(/.png$/, '.jpg');
-        }
-        fileName.replace(/.jpg$/, '.png');
-        fileName.replace(/.jpeg$/, '.png');
-        return fileName;
-      },
       edit: function(event) {
+        var changeExt = function(fileName, toJpeg) {
+          if(toJpeg == true) {
+            return fileName.replace(/.png$/, '.jpg');
+          }
+          fileName.replace(/.jpg$/, '.png');
+          fileName.replace(/.jpeg$/, '.png');
+          return fileName;
+        };
+        var fileType = function(toJpeg) {
+          if(toJpeg == true) {
+            return 'image/jpeg';
+          }
+          return 'image/png';
+        };
+        var appendSequence = function() {
+          var image  = new Image();
+          image.src    = canvas.toDataURL();
+          image.width  = '640'; 
+          image.height = '360';
+          document.getElementById('control').appendChild(image);
+        };
+
         if(this.mask) mask(canvas);
         caption(canvas);
-        this.fileName  = this.changeExt(canvas.file.name);
+        this.fileName  = changeExt(canvas.file.name, this.toJpeg);
         if(this.copyright) copyright(canvas);
         if(this.sequence === true) {
-          this.appendSequence(event);
+          appendSequence(event);
         }
         if(this.msBrowser === false) {
-          this.imageData = canvas.toDataURL(this.fileType());
+          this.imageData = canvas.toDataURL(fileType(this.toJpeg));
         }
         this.downloadReady = true;
       },
@@ -174,13 +182,6 @@ var app = function() {
         if (window.navigator.msSaveBlob) {
           window.navigator.msSaveOrOpenBlob(blob, this.fileName);
         }
-      },
-      appendSequence: function(event) {
-        var image  = new Image();
-        image.src    = canvas.toDataURL();
-        image.width  = '640'; 
-        image.height = '360';
-        document.getElementById('control').appendChild(image);
       },
     },
   });
