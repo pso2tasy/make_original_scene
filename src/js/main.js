@@ -34,19 +34,30 @@ var app = function() {
     ctx.fillText('(C)SEGA', canvas.width - (10 * ratio.width), canvas.height - (6 * ratio.height));
   };
   var caption = function(canvas) {
+    var fontSize = parseInt(35 * ratio.height).toString();
+    var captionX = canvas.width / 2;
+    var captionY = canvas.height - vm.maskHeight - (20 * ratio.height);
     var ctx    = canvas.getContext('2d');
     ctx.textAlign    = 'center';
     ctx.textBaseline = 'bottom';
     ctx.shadowColor  = '#000';
     ctx.fillStyle    = '#fff';
-    ctx.font         = 'normal ' + parseInt(35 * ratio.height).toString() + 'px cinecaption';
+    ctx.font         = 'normal ' + fontSize + 'px cinecaption';
 
     // 何度も書いて無理やり縁取り
     var stroke = function(blur, offsetX, offsetY) {
       ctx.shadowBlur    = blur;
       ctx.shadowOffsetX = offsetX;
       ctx.shadowOffsetY = offsetY;
-      ctx.fillText(vm.text, canvas.width / 2, canvas.height - vm.maskHeight - (20 * ratio.height));
+      if(vm.text1 != '' && vm.text2 != '') {
+        ctx.fillText(vm.text1, captionX, captionY - fontSize - (fontSize * ratio.height * 0.2));
+        ctx.fillText(vm.text2, captionX, captionY);
+      }else if(vm.text1 != '' && vm.text2 == '')
+      {
+        ctx.fillText(vm.text1, captionX, captionY);
+      } else if(vm.text1 == '' && vm.text2 != '') {
+        ctx.fillText(vm.text2, captionX, captionY);
+      }
     };
     stroke( 3,  3,  0);
     stroke( 3, -3,  0);
@@ -73,17 +84,19 @@ var app = function() {
   var vm = new Vue({
     el: '#application',
     data: {
-      text          : 'ここに文字を入れます。',
-      copyright     : true, // (C)SEGA を入れるかどうか
-      mask          : true, // 上下の黒帯 を入れるかどうか
-      maskHeight    : 70,   // 上下の黒帯 px 
-      canvas        : canvas,
-      imageData     : null,
-      fileName      : '',
-      toJpeg        : true,
-      sequence      : false,
-      msBrowser     : false,
-      downloadReady : false,
+      text1          : 'ここに文字を入れます。',
+      text2          : '',
+      copyright      : true, // (C)SEGA を入れるかどうか
+      mask           : true, // 上下の黒帯 を入れるかどうか
+      maskHeight     : 70,   // 上下の黒帯 px 
+      canvas         : canvas,
+      imageData      : null,
+      fileName       : '',
+      toJpeg         : true,
+      sequence       : false,
+      msBrowser      : false,
+      downloadReady  : false,
+      display2ndLine : false,
     },
     created: function() {
       var ua = window.navigator.userAgent.toLowerCase();
@@ -125,6 +138,9 @@ var app = function() {
             vintageApi.reset();
             break;
         }
+      },
+      add2ndLine: function() {
+        this.display2ndLine = true;
       },
       fileType: function() {
         if(this.toJpeg == true) {

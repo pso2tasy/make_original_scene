@@ -35,7 +35,9 @@ html(lang="ja")
             input(type="button", value="のいず", v-on:click="effect('noise')")
           #makeIt
             #caption
-              input(type="text", v-model="text")
+              input(type="text", v-model="text1")
+              span(v-on:click="add2ndLine", class="add_2nd_line flipflop", v-bind:class="{'display_inline-block': !display2ndLine}") ＋
+              input(type="text", v-model="text2", class="flipflop", v-bind:class="{'display_inline': display2ndLine}")
             input(type="button", value="これでつくる", v-on:click="edit")
             input(type="button", value="もじけし", v-on:click="effect('reset')")
             a(href="{{imageData}}", download="{{fileName}}", class="flipflop", v-bind:class="{'display_inline': !msBrowser && downloadReady}") だうんろーど
