@@ -162,16 +162,26 @@ var app = function() {
           document.getElementById('control').appendChild(image);
         };
 
-        if(this.mask) mask(canvas);
+        if(this.mask) {
+          mask(canvas);
+        }
+
         caption(canvas);
+
         this.fileName  = changeExt(canvas.file.name, this.toJpeg);
-        if(this.copyright) copyright(canvas);
+
+        if(this.copyright) {
+          copyright(canvas);
+        }
+
         if(this.sequence === true) {
           appendSequence(event);
         }
+
         if(this.msBrowser === false) {
           this.imageData = canvas.toDataURL(this.fileType(this.toJpeg));
         }
+
         this.downloadReady = true;
       },
       msDownload: function() {
@@ -193,9 +203,7 @@ var app = function() {
         }
         var fileType = this.fileType(this.toJpeg);
         var image    = this.canvas.toDataURL(fileType);
-        var blob = toBlob(image, fileType);
-        navigator.msSaveBlob(blob, this.fileName);
-        blob.msClose();
+        navigator.msSaveBlob(toBlob(image, fileType), this.fileName);
       },
     },
   });
