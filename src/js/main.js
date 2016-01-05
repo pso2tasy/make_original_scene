@@ -165,9 +165,10 @@ var app = function() {
           if(event.keyCode == '13') {
             this.display2ndLine = true;
           }
-          return;
+          if(event.type == 'click') {
+            this.display2ndLine = true;
+          }
         }
-        this.display2ndLine = true;
       },
       fileType : function(toJpeg) {
         if(toJpeg == true) {
