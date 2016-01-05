@@ -33,16 +33,17 @@ var app = function() {
     ctx.fillText('(C)SEGA', canvas.width - (10 * ratio.width), canvas.height - (6 * ratio.height));
   };
   var caption = function(canvas) {
-    var fontSize = parseInt(35 * ratio.height).toString();
-    var lineHeight = fontSize - (fontSize * ratio.height * 0.2);
-    var captionX = canvas.width / 2;
-    var captionY = canvas.height - vm.maskHeight - (20 * ratio.height);
-    var ctx    = canvas.getContext('2d');
+    var fontSize   = parseInt(35 * ratio.height);
+    var lineHeight = fontSize + (fontSize * ratio.height * 0.3);
+    var captionX   = canvas.width / 2;
+    var captionY   = canvas.height - vm.maskHeight - (20 * ratio.height);
+    var ctx        = canvas.getContext('2d');
+
     ctx.textAlign    = 'center';
     ctx.textBaseline = 'bottom';
     ctx.shadowColor  = '#000';
     ctx.fillStyle    = '#fff';
-    ctx.font         = 'normal ' + fontSize + 'px cinecaption';
+    ctx.font         = 'normal ' + fontSize.toString() + 'px cinecaption';
 
     // 何度も書いて無理やり縁取り
     var fill = function(blur, offsetX, offsetY) {
