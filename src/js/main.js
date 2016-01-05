@@ -11,11 +11,14 @@ var app = function() {
   };
 
   var canvas = document.getElementById('canvas');
+  var resetShadow = function(ctx, blur, offsetX, offsetY) {
+     ctx.shadowBlur    = blur;
+     ctx.shadowOffsetX = offsetX;
+     ctx.shadowOffsetY = offsetY;
+  };
   var mask   = function(canvas) {
      var ctx    = canvas.getContext('2d');
-     ctx.shadowBlur    = 0;
-     ctx.shadowOffsetX = 0;
-     ctx.shadowOffsetY = 0;
+     resetShadow(ctx, 0, 0, 0);
      ctx.fillStyle     = '#000';
      ctx.fillRect(0, 0, canvas.width, vm.maskHeight);
      ctx.fillRect(0, canvas.height, canvas.width, -vm.maskHeight);
@@ -23,9 +26,7 @@ var app = function() {
   var copyright = function(canvas) {
     var ctx    = canvas.getContext('2d');
     ctx.font = 'normal 400 ' + parseInt(18 * ratio.height).toString() + 'px Open Sans, sans-serif';
-    ctx.shadowBlur    = 0;
-    ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 0;
+    resetShadow(ctx, 0, 0, 0);
     ctx.textAlign     = 'left';
     ctx.textBaseline  = 'bottom';
     ctx.fillStyle     = '#dfdfdf';
@@ -47,9 +48,7 @@ var app = function() {
 
     // 何度も書いて無理やり縁取り
     var fill = function(blur, offsetX, offsetY) {
-      ctx.shadowBlur    = blur;
-      ctx.shadowOffsetX = offsetX;
-      ctx.shadowOffsetY = offsetY;
+      resetShadow(ctx, blur, offsetX, offsetY);
       if(vm.text1 != '' && vm.text2 != '') {
         ctx.fillText(vm.text1, captionX, captionY - lineHeight);
         ctx.fillText(vm.text2, captionX, captionY);
@@ -61,9 +60,7 @@ var app = function() {
       }
     };
     var stroke = function(blur, offsetX, offsetY) {
-      ctx.shadowBlur    = blur;
-      ctx.shadowOffsetX = offsetX;
-      ctx.shadowOffsetY = offsetY;
+      resetShadow(ctx, blur, offsetX, offsetY);
       if(vm.text1 != '' && vm.text2 != '') {
         ctx.strokeText(vm.text1, captionX, captionY - lineHeight);
         ctx.strokeText(vm.text2, captionX, captionY);
@@ -94,12 +91,12 @@ var app = function() {
   var loadImage = function(canvas, image, file){
     canvas.width  = image.width;
     canvas.height = image.height;
-    canvas.file   = file;
     var ctx       = canvas.getContext('2d');
     ctx.drawImage(image, 0, 0);
     ratio.height = canvas.height / ratio.base.height;
     ratio.width  = canvas.width / ratio.base.width;
     // 1080 に対して70 の比率をもとにしているので。
+    vm.fileName   = file.name;
     vm.maskHeight = parseInt(canvas.height * 70 / 1080);
     vintageApi = new VintageJS(image);
   };
@@ -181,9 +178,7 @@ var app = function() {
           if(toJpeg == true) {
             return fileName.replace(/.png$/, '.jpg');
           }
-          fileName.replace(/.jpg$/, '.png');
-          fileName.replace(/.jpeg$/, '.png');
-          return fileName;
+          return fileName.replace(/.jpg$/, '.png').replace(/.jpeg$/, '.png');
         };
         var appendSequence = function() {
           var image  = new Image();
@@ -199,7 +194,7 @@ var app = function() {
 
         caption(canvas);
 
-        this.fileName  = changeExt(canvas.file.name, this.toJpeg);
+        this.fileName  = changeExt(this.fileName, this.toJpeg);
 
         if(this.copyright) {
           copyright(canvas);
