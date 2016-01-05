@@ -91,7 +91,7 @@ var app = function() {
   var vm = new Vue({
     el: '#application',
     data: {
-      text1          : 'ここに文字を入れます。',
+      text1          : '',
       text2          : '',
       copyright      : true, // (C)SEGA を入れるかどうか
       mask           : true, // 上下の黒帯 を入れるかどうか
