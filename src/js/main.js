@@ -144,7 +144,13 @@ var app = function() {
             break;
         }
       },
-      add2ndLine: function() {
+      add2ndLine: function(event) {
+        if(event.type='keypress') {
+          if(event.keyCode == '13') {
+            this.display2ndLine = true;
+          }
+          return;
+        }
         this.display2ndLine = true;
       },
       fileType : function(toJpeg) {
