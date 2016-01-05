@@ -23,7 +23,8 @@ html(lang="ja")
             | 時々本当に壊れてるので、その時は教えてください……。
         #debug(v-model="debug")
         #workbench
-          canvas#canvas(v-model="canvas")
+          #easel
+            canvas#canvas(v-model="canvas")
         #control
           #filter
             input(type="button", value="みほん", v-on:click="effect('sample')")

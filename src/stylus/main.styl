@@ -1,6 +1,7 @@
 contentWidth     = 1040px
 applicationWidth = 1040px
 canvasWidth      = 960px
+canvasHeight     = 540px
 
 mainColor        = #fff
 subColor         = #000
@@ -69,11 +70,24 @@ h1
   width = applicationWidth
 #canvas
   display block
+  margin auto
   max-width   canvasWidth
-  max-height  540px
-  margin  0 auto
+  max-height  canvasHeight
   background-color subColor
+#easel
+  margin  0 auto
+  width   canvasWidth
+  height  canvasHeight
+  background-color subColor
+  text-align center
+  display table-cell
+  vertical-align middle
 
+#workbench
+  margin 0 auto
+  width  canvasWidth
+  height canvasHeight
+  background-color subColor
 #control
   width   canvasWidth
   text-align center
