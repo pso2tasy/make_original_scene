@@ -22,15 +22,15 @@ var app = function() {
   };
   var copyright = function(canvas) {
     var ctx    = canvas.getContext('2d');
-    //ctx.font = 'normal ' + parseInt(30 * ratio.height).toString() + 'px Century Gothic';
-    ctx.font = 'normal ' + parseInt(30 * ratio.height).toString() + 'px Roboto';
+    ctx.font = 'normal 400 ' + parseInt(18 * ratio.height).toString() + 'px Open Sans, sans-serif';
     ctx.shadowBlur    = 0;
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 0;
-    ctx.textAlign     = 'right';
-    ctx.textBaseline  = 'end';
+    ctx.textAlign     = 'left';
+    ctx.textBaseline  = 'bottom';
     ctx.fillStyle     = '#dfdfdf';
-    ctx.fillText('(C)SEGA', canvas.width - (10 * ratio.width), canvas.height - (6 * ratio.height));
+    console.log(canvas.height);
+    ctx.fillText('\u00A9SEGA', 10 * ratio.height, canvas.height - vm.maskHeight - (2 * ratio.height));
   };
   var caption = function(canvas) {
     var fontSize   = parseInt(35 * ratio.height);
