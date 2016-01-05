@@ -30,7 +30,6 @@ var app = function() {
     ctx.textAlign     = 'right';
     ctx.textBaseline  = 'end';
     ctx.fillStyle     = '#dfdfdf';
-    console.log(canvas.height);
     ctx.fillText('(C)SEGA', canvas.width - (10 * ratio.width), canvas.height - (6 * ratio.height));
   };
   var caption = function(canvas) {
@@ -102,12 +101,10 @@ var app = function() {
       var ua = window.navigator.userAgent.toLowerCase();
       if (ua.indexOf('edge') != -1) {
         this.msBrowser = true;
-        this.toJpeg    = false;
       } else if (ua.indexOf('chrome') != -1){
       } else if (ua.indexOf('firefox') != -1){
       } else {
         this.msBrowser = true;
-        this.toJpeg    = false;
       }
     },
     methods: {
@@ -142,6 +139,12 @@ var app = function() {
       add2ndLine: function() {
         this.display2ndLine = true;
       },
+      fileType : function(toJpeg) {
+        if(toJpeg == true) {
+          return 'image/jpeg';
+        }
+        return 'image/png';
+      },
       edit: function(event) {
         var changeExt = function(fileName, toJpeg) {
           if(toJpeg == true) {
@@ -150,12 +153,6 @@ var app = function() {
           fileName.replace(/.jpg$/, '.png');
           fileName.replace(/.jpeg$/, '.png');
           return fileName;
-        };
-        var fileType = function(toJpeg) {
-          if(toJpeg == true) {
-            return 'image/jpeg';
-          }
-          return 'image/png';
         };
         var appendSequence = function() {
           var image  = new Image();
@@ -173,15 +170,32 @@ var app = function() {
           appendSequence(event);
         }
         if(this.msBrowser === false) {
-          this.imageData = canvas.toDataURL(fileType(this.toJpeg));
+          this.imageData = canvas.toDataURL(this.fileType(this.toJpeg));
         }
         this.downloadReady = true;
       },
-      msDownload: function(event) {
-        var blob = this.canvas.msToBlob();
-        if (window.navigator.msSaveBlob) {
-          window.navigator.msSaveOrOpenBlob(blob, this.fileName);
+      msDownload: function() {
+        // http://qiita.com/uin010bm/items/150003f016287750cf34
+        function toBlob(base64, contentType) {
+          var bin = atob(base64.replace(/^.*,/, ''));
+          var buffer = new Uint8Array(bin.length);
+          for (var i = 0; i < bin.length; i++) {
+              buffer[i] = bin.charCodeAt(i);
+          }
+          try{
+              var blob = new Blob([buffer.buffer], {
+                  type: contentType
+              });
+          }catch (e){
+              return false;
+          }
+          return blob;
         }
+        var fileType = this.fileType(this.toJpeg);
+        var image    = this.canvas.toDataURL(fileType);
+        var blob = toBlob(image, fileType);
+        navigator.msSaveBlob(blob, this.fileName);
+        blob.msClose();
       },
     },
   });

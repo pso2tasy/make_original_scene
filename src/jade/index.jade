@@ -49,9 +49,8 @@ html(lang="ja")
               span.copyright (C)SEGA
             input#mask(type="checkbox", v-model="mask")
             label(for="mask") ますく
-            span(class="flipflop", v-bind:class="{'display_inline': !msBrowser}")
-              input#toJpeg(type="checkbox", v-model="toJpeg")
-              label(for="toJpeg") あっしゅく
+            input#toJpeg(type="checkbox", v-model="toJpeg")
+            label(for="toJpeg") あっしゅく
             input#sequence(type="checkbox", v-model="sequence")
             label(for="sequence") れんぞく（ファイル名が保持されません。）
         #thanks
