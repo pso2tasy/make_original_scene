@@ -34,6 +34,7 @@ var app = function() {
   };
   var caption = function(canvas) {
     var fontSize = parseInt(35 * ratio.height).toString();
+    var lineHeight = fontSize - (fontSize * ratio.height * 0.2);
     var captionX = canvas.width / 2;
     var captionY = canvas.height - vm.maskHeight - (20 * ratio.height);
     var ctx    = canvas.getContext('2d');
@@ -44,12 +45,12 @@ var app = function() {
     ctx.font         = 'normal ' + fontSize + 'px cinecaption';
 
     // 何度も書いて無理やり縁取り
-    var stroke = function(blur, offsetX, offsetY) {
+    var fill = function(blur, offsetX, offsetY) {
       ctx.shadowBlur    = blur;
       ctx.shadowOffsetX = offsetX;
       ctx.shadowOffsetY = offsetY;
       if(vm.text1 != '' && vm.text2 != '') {
-        ctx.fillText(vm.text1, captionX, captionY - fontSize - (fontSize * ratio.height * 0.2));
+        ctx.fillText(vm.text1, captionX, captionY - lineHeight);
         ctx.fillText(vm.text2, captionX, captionY);
       }else if(vm.text1 != '' && vm.text2 == '')
       {
@@ -58,30 +59,36 @@ var app = function() {
         ctx.fillText(vm.text2, captionX, captionY);
       }
     };
-    stroke( 2,  3,  0);
-    stroke( 2, -3,  0);
-    stroke( 2,  0,  3);
-    stroke( 2,  0, -3);
-    stroke( 4,  2,  2);
-    stroke( 4,  2, -2);
-    stroke( 4, -2,  2);
-    stroke( 4, -2, -2);
-    stroke( 3,  0,  0);
-    stroke( 3,  0,  0);
-    stroke(20,  0,  0);
+    var stroke = function(blur, offsetX, offsetY) {
+      ctx.shadowBlur    = blur;
+      ctx.shadowOffsetX = offsetX;
+      ctx.shadowOffsetY = offsetY;
+      if(vm.text1 != '' && vm.text2 != '') {
+        ctx.strokeText(vm.text1, captionX, captionY - lineHeight);
+        ctx.strokeText(vm.text2, captionX, captionY);
+      }else if(vm.text1 != '' && vm.text2 == '')
+      {
+        ctx.strokeText(vm.text1, captionX, captionY);
+      } else if(vm.text1 == '' && vm.text2 != '') {
+        ctx.strokeText(vm.text2, captionX, captionY);
+      }
+    };
+    fill( 2,  3,  0);
+    fill( 2, -3,  0);
+    fill( 2,  0,  3);
+    fill( 2,  0, -3);
+    fill( 4,  2,  2);
+    fill( 4,  2, -2);
+    fill( 4, -2,  2);
+    fill( 4, -2, -2);
+    fill( 3,  0,  0);
+    fill( 3,  0,  0);
+    fill(20,  0,  0);
     ctx.shadowColor  = '#333';
-    stroke(20,  0,  0);
+    fill(20,  0,  0);
     ctx.shadowColor  = '#000';
-    if(vm.text1 != '' && vm.text2 != '') {
-      ctx.strokeText(vm.text1, captionX, captionY - fontSize - (fontSize * ratio.height * 0.2));
-      ctx.strokeText(vm.text2, captionX, captionY);
-    }else if(vm.text1 != '' && vm.text2 == '')
-    {
-      ctx.strokeText(vm.text1, captionX, captionY);
-    } else if(vm.text1 == '' && vm.text2 != '') {
-      ctx.strokeText(vm.text2, captionX, captionY);
-    }
-    stroke( 0,  0,  0);
+    stroke(20, 0, 0);
+    fill( 0,  0,  0);
   };
   var loadImage = function(canvas, image, file){
     canvas.width  = image.width;
