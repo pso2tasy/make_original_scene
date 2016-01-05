@@ -58,14 +58,22 @@ var app = function() {
         ctx.fillText(vm.text2, captionX, captionY);
       }
     };
-    stroke( 3,  3,  0);
-    stroke( 3, -3,  0);
-    stroke( 3,  0,  3);
-    stroke( 3,  0, -3);
-    stroke(10,  0,  0);
-    stroke(10,  0,  0);
-    stroke(10,  0,  0);
-    stroke(10,  0,  0);
+    stroke( 2,  3,  0);
+    stroke( 2, -3,  0);
+    stroke( 2,  0,  3);
+    stroke( 2,  0, -3);
+    stroke( 4,  2,  2);
+    stroke( 4,  2, -2);
+    stroke( 4, -2,  2);
+    stroke( 4, -2, -2);
+    stroke( 3,  0,  0);
+    stroke( 3,  0,  0);
+    stroke(20,  0,  0);
+    ctx.shadowColor  = '#333';
+    stroke(20,  0,  0);
+    ctx.shadowColor  = '#000';
+    ctx.strokeText(vm.text1, captionX, captionY - fontSize - (fontSize * ratio.height * 0.2));
+    stroke( 0,  0,  0);
   };
   var loadImage = function(canvas, image, file){
     canvas.width  = image.width;
