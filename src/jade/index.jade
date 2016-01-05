@@ -47,7 +47,8 @@ html(lang="ja")
           #setting
             input#copyright(type="checkbox", v-model="copyright")
             label(for="copyright")
-              span.copyright (C)SEGA
+              //- そのままだと&がエスケープ処理されるので。
+              span.copyright !{"&#x00A9;"}SEGA
             input#mask(type="checkbox", v-model="mask")
             label(for="mask") ますく
             input#toJpeg(type="checkbox", v-model="toJpeg")
