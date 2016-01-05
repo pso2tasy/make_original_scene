@@ -72,7 +72,15 @@ var app = function() {
     ctx.shadowColor  = '#333';
     stroke(20,  0,  0);
     ctx.shadowColor  = '#000';
-    ctx.strokeText(vm.text1, captionX, captionY - fontSize - (fontSize * ratio.height * 0.2));
+    if(vm.text1 != '' && vm.text2 != '') {
+      ctx.strokeText(vm.text1, captionX, captionY - fontSize - (fontSize * ratio.height * 0.2));
+      ctx.strokeText(vm.text2, captionX, captionY);
+    }else if(vm.text1 != '' && vm.text2 == '')
+    {
+      ctx.strokeText(vm.text1, captionX, captionY);
+    } else if(vm.text1 == '' && vm.text2 != '') {
+      ctx.strokeText(vm.text2, captionX, captionY);
+    }
     stroke( 0,  0,  0);
   };
   var loadImage = function(canvas, image, file){
