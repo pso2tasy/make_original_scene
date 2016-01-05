@@ -87,6 +87,12 @@ h1
     background-color mainColor
     margin 0em 1em
     cursor pointer
+  input:focus
+    outline 1px dotted accentColorBlue
+  input[type=text]
+    background-color #dfdfdf
+  input[type=text]:focus
+    outline 0
   #filter
     margin 0.5em 0em;
     input
@@ -100,10 +106,11 @@ h1
     #caption
       input[type=text]
         cursor text
-        background-color #dfdfdf
         margin .5em 0 .5em 0
         padding .3em
         width 35em
+      input[type=text]:focus
+        background-color mainColor
       .add_2nd_line
         vertical-align top
         margin 0
