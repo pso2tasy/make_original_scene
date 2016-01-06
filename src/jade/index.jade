@@ -40,6 +40,7 @@ html(lang="ja")
               span(v-on:click="add2ndLine", class="add_2nd_line flipflop", v-bind:class="{'display_inline-block': !display2ndLine}") ＋
               input(type="text", v-model="text2", class="flipflop", v-bind:class="{'display_inline': display2ndLine}", placeholder="にぎょうめ")
             input(type="button", value="これでつくる", v-on:click="edit")
+            input(type="button", value="さげる（実験機能）", v-on:click="move")
             input(type="button", value="もじけし", v-on:click="effect('reset')")
             a(href="{{imageData}}", download="{{fileName}}", class="flipflop", v-bind:class="{'display_inline': !msBrowser && downloadReady}") だうんろーど
             //- Microsoft Edge, Internet Explorer は download属性に対応していないのでこちら。

@@ -129,6 +129,11 @@ var app = function() {
       }
     },
     methods: {
+      move: function() {
+        var ctx    = this.canvas.getContext('2d');
+        var data = ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
+        ctx.putImageData(data, 0, this.maskHeight/2);
+      },
       effect: function(type) {
         switch(type) {
           case 'sample':
