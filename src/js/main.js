@@ -98,7 +98,7 @@ var app = function() {
     // 1080 に対して70 の比率をもとにしているので。
     vm.fileName   = file.name;
     vm.maskHeight = parseInt(canvas.height * 70 / 1080);
-    vintageApi = new VintageJS(image);
+    vintageApi = new VintageJS(canvas);
   };
 
   var vm = new Vue({
@@ -161,6 +161,9 @@ var app = function() {
             break;
           case 'reset':
             vintageApi.reset();
+            break;
+          case 'apply':
+            vintageApi.apply();
             break;
         }
       },
