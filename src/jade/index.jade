@@ -42,7 +42,7 @@ html(lang="ja")
             input(type="button", value="これでつくる", v-on:click="edit")
             input(type="button", value="さげる（実験機能）", v-on:click="move")
             input(type="button", value="もじけし", v-on:click="effect('reset')")
-            a(href="{{imageData}}", download="{{fileName}}", class="flipflop", v-bind:class="{'display_inline': !msBrowser && downloadReady}") だうんろーど
+            a(href="{{imageData}}", download="{{fileName}}", class="flipflop", v-bind:class="{'display_inline-block': !msBrowser && downloadReady}") だうんろーど
             //- Microsoft Edge, Internet Explorer は download属性に対応していないのでこちら。
             input(type="button", value="だうんろーど", v-on:click="msDownload", class="flipflop", v-bind:class="{'display_inline': msBrowser && downloadReady}")
           #setting
