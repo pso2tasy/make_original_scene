@@ -32,7 +32,7 @@ var config = {
     options: { compress: true }
   },
   javascript: {
-    src: ['node_modules/vue/dist/vue.min.js', 'node_modules/vintagejs/dist/vintage.min.js', 'src/js/lib/**/*.js', 'src/js/*.js', '!src/js/**/_*/**/*.js'],
+    src: ['node_modules/vue/dist/vue.min.js', 'src/js/lib/**/*.js', 'src/js/*.js', '!src/js/**/_*/**/*.js'],
     dest: 'public/js/',
   },
   browserSync: {
