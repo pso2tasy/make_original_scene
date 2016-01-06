@@ -132,7 +132,9 @@ var app = function() {
       move: function() {
         var ctx    = this.canvas.getContext('2d');
         var data = ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
-        ctx.putImageData(data, 0, this.maskHeight/2);
+        var h = (parseInt)(this.maskHeight / 2);
+        ctx.clearRect(0, 0, this.canvas.width, h);
+        ctx.putImageData(data, 0, h);
       },
       effect: function(type) {
         switch(type) {
