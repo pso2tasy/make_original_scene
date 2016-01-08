@@ -11,14 +11,15 @@ var app = function() {
   };
 
   var canvas = document.getElementById('canvas');
-  var resetShadow = function(ctx, blur, offsetX, offsetY) {
+  var resetShadow = function(ctx, blur, offsetX, offsetY, color) {
+     ctx.shadowColor   = color;
      ctx.shadowBlur    = blur;
      ctx.shadowOffsetX = offsetX;
      ctx.shadowOffsetY = offsetY;
   };
   var mask   = function(canvas) {
      var ctx    = canvas.getContext('2d');
-     resetShadow(ctx, 0, 0, 0);
+     resetShadow(ctx, 0, 0, 0, '#000');
      ctx.fillStyle     = '#000';
      ctx.fillRect(0, 0, canvas.width, vm.maskHeight);
      ctx.fillRect(0, canvas.height, canvas.width, -vm.maskHeight);
@@ -26,12 +27,13 @@ var app = function() {
   var copyright = function(canvas) {
     var ctx    = canvas.getContext('2d');
     ctx.font = 'normal 400 ' + parseInt(18 * ratio.height).toString() + 'px Open Sans, sans-serif';
-    resetShadow(ctx, 0, 0, 0);
+    resetShadow(ctx, 0, 0, 0, '#fff');
     ctx.textAlign     = 'left';
     ctx.textBaseline  = 'bottom';
-    ctx.fillStyle     = '#dfdfdf';
+    ctx.fillStyle     = 'rgba(255,255,255,0.5)';
     console.log(canvas.height);
-    ctx.fillText('\u00A9SEGA', 10 * ratio.height, canvas.height - vm.maskHeight - (2 * ratio.height));
+    var text = '\u00A9SEGA';
+    ctx.fillText(text , canvas.width - (10 * ratio.width) - ctx.measureText(text).width, canvas.height - vm.maskHeight - (2 * ratio.height));
   };
   var caption = function(canvas) {
     var fontSize   = parseInt(35 * ratio.height);
@@ -42,13 +44,12 @@ var app = function() {
 
     ctx.textAlign    = 'center';
     ctx.textBaseline = 'bottom';
-    ctx.shadowColor  = '#000';
     ctx.fillStyle    = '#fff';
     ctx.font         = 'normal ' + fontSize.toString() + 'px cinecaption';
 
     // 何度も書いて無理やり縁取り
     var fill = function(blur, offsetX, offsetY) {
-      resetShadow(ctx, blur, offsetX, offsetY);
+      resetShadow(ctx, blur, offsetX, offsetY, '#000');
       if(vm.text1 != '' && vm.text2 != '') {
         ctx.fillText(vm.text1, captionX, captionY - lineHeight);
         ctx.fillText(vm.text2, captionX, captionY);
@@ -60,7 +61,7 @@ var app = function() {
       }
     };
     var stroke = function(blur, offsetX, offsetY) {
-      resetShadow(ctx, blur, offsetX, offsetY);
+      resetShadow(ctx, blur, offsetX, offsetY, '#000');
       if(vm.text1 != '' && vm.text2 != '') {
         ctx.strokeText(vm.text1, captionX, captionY - lineHeight);
         ctx.strokeText(vm.text2, captionX, captionY);
@@ -249,7 +250,7 @@ var app = function() {
 
   var welcome = new Image();
   welcome.onload = function() {
-    loadImage(canvas, welcome, {'filename': 'welcome.jpg'});
+    loadImage(canvas, welcome, {'name': 'welcome.jpg'});
   };
   welcome.src = "./file/img/welcome.jpg";
 }();
