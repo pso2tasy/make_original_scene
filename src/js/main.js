@@ -249,7 +249,7 @@ var app = function() {
 
   var welcome = new Image();
   welcome.onload = function() {
-    loadImage(canvas, welcome, {});
+    loadImage(canvas, welcome, {'filename': 'welcome.jpg'});
   };
   welcome.src = "./file/img/welcome.jpg";
 }();
