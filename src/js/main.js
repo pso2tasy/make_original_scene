@@ -117,7 +117,9 @@ var app = function() {
       sequence       : false,
       msBrowser      : false,
       downloadReady  : false,
-      display2ndLine : false,
+      display        : {
+        line2 : false,
+      }
     },
     created: function() {
       var ua = window.navigator.userAgent.toLowerCase();
@@ -171,10 +173,10 @@ var app = function() {
       add2ndLine: function(event) {
         if(event.type='keypress') {
           if(event.keyCode == '13') {
-            this.display2ndLine = true;
+            this.display.line2 = true;
           }
           if(event.type == 'click') {
-            this.display2ndLine = true;
+            this.display.line2 = true;
           }
         }
       },
