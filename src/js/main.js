@@ -98,11 +98,10 @@ var app = function() {
     canvas.height = image.height;
     var ctx       = canvas.getContext('2d');
     ctx.drawImage(image, 0, 0);
-    // 横画像か縦画像か
-    if(image.width >= image.height) {
-      ratio.height = canvas.height / ratio.base.height;
-      ratio.width  = canvas.width / ratio.base.width;
-    } else {
+    ratio.height = canvas.height / ratio.base.height;
+    ratio.width  = canvas.width / ratio.base.width;
+    // 縦画像の時、文字サイズとマスクの計算に使う比率を調整
+    if(image.width < image.height) {
       ratio.height = canvas.height / ratio.base.width;
       ratio.width  = canvas.width / ratio.base.height;
     }
