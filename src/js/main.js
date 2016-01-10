@@ -33,7 +33,11 @@ var app = function() {
     ctx.fillStyle     = 'rgba(255,255,255,0.5)';
     console.log(canvas.height);
     var text = '\u00A9SEGA';
-    ctx.fillText(text , canvas.width - (10 * ratio.width) - ctx.measureText(text).width, canvas.height - vm.maskHeight - (2 * ratio.height));
+    var baseline = canvas.height - vm.maskHeight - (2 * ratio.height);
+    if(vm.mask !== true) {
+      baseline = canvas.height - (2 * ratio.height);
+    }
+    ctx.fillText(text , canvas.width - (10 * ratio.width) - ctx.measureText(text).width, baseline);
   };
   var caption = function(canvas) {
     var fontSize   = parseInt(35 * ratio.height);
