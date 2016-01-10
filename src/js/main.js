@@ -94,8 +94,14 @@ var app = function() {
     canvas.height = image.height;
     var ctx       = canvas.getContext('2d');
     ctx.drawImage(image, 0, 0);
-    ratio.height = canvas.height / ratio.base.height;
-    ratio.width  = canvas.width / ratio.base.width;
+    // 横画像か縦画像か
+    if(image.width >= image.height) {
+      ratio.height = canvas.height / ratio.base.height;
+      ratio.width  = canvas.width / ratio.base.width;
+    } else {
+      ratio.height = canvas.height / ratio.base.width;
+      ratio.width  = canvas.width / ratio.base.height;
+    }
     // 1080 に対して70 の比率をもとにしているので。
     vm.fileName   = file.name;
     vm.maskHeight = parseInt(canvas.height * 70 / 1080);
