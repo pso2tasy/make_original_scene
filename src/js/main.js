@@ -31,7 +31,6 @@ var app = function() {
     ctx.textAlign     = 'left';
     ctx.textBaseline  = 'bottom';
     ctx.fillStyle     = 'rgba(255,255,255,0.5)';
-    console.log(canvas.height);
     var text = '\u00A9SEGA';
     ctx.fillText(text , canvas.width - (10 * ratio.width) - ctx.measureText(text).width, canvas.height - vm.maskHeight - (2 * ratio.height));
   };
@@ -104,6 +103,18 @@ var app = function() {
 
   var vm = new Vue({
     el: '#application',
+    computed: {
+      sample         : function(){ return 'button' + this.count.sample % 8;},
+      vignette       : function(){ return 'button' + this.count.vignette % 8;},
+      contrastUp     : function(){ return 'button' + this.count.contrastUp % 8;},
+      desaturate     : function(){ return 'button' + this.count.desaturate % 8;},
+      brightnessUp   : function(){ return 'button' + this.count.brightnessUp % 8;},
+      brightnessDown : function(){ return 'button' + this.count.brightnessDown % 8;},
+      noise          : function(){ return 'button' + this.count.noise % 8;},
+      moveDown       : function(){ return 'button' + this.count.moveDown % 8;},
+      //apply         : function(){ return 'button' + this.count['apply'] % 8 },
+      //reset         : function(){ return 'button' + this.count['return'] % 8 },
+    },
     data: {
       text1          : '',
       text2          : '',
@@ -119,7 +130,19 @@ var app = function() {
       downloadReady  : false,
       display        : {
         line2 : false,
-      }
+      },
+      count          : {
+        sample         : 0,
+        vignette       : 0,
+        contrastUp     : 0,
+        desaturate     : 0,
+        brightnessUp   : 0,
+        brightnessDown : 0,
+        noise          : 0,
+        moveDown       : 0,
+        apply          : 0,
+        reset          : 0,
+      },
     },
     created: function() {
       var ua = window.navigator.userAgent.toLowerCase();
@@ -132,13 +155,10 @@ var app = function() {
       }
     },
     methods: {
-      move: function() {
-        var ctx    = this.canvas.getContext('2d');
-        var data = ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
-        var h = (parseInt)(this.maskHeight / 2);
-        ctx.clearRect(0, 0, this.canvas.width, h);
-        ctx.putImageData(data, 0, h);
-      },
+      countUp: function(target){
+        this.count[target]++;
+        console.log(target + ':'+ this.count[target]);
+      }, 
       effect: function(type) {
         switch(type) {
           case 'sample':
@@ -147,16 +167,16 @@ var app = function() {
           case 'vignette':
             vintageApi.vintage({vignette: 1});
             break;
-          case 'contrast+':
+          case 'contrastUp':
             vintageApi.vintage({contrast: 5});
             break;
           case 'desaturate':
             vintageApi.vintage({desaturate: 0.2});
             break;
-          case 'brightness+':
+          case 'brightnessUp':
             vintageApi.vintage({brightness: 10});
             break;
-          case 'brightness-':
+          case 'brightnessDown':
             vintageApi.vintage({brightness: -10});
             break;
           case 'noise':
@@ -168,7 +188,15 @@ var app = function() {
           case 'apply':
             vintageApi.apply();
             break;
+          case 'moveDown':
+            var ctx    = this.canvas.getContext('2d');
+            var data = ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
+            var h = (parseInt)(this.maskHeight / 2);
+            ctx.clearRect(0, 0, this.canvas.width, h);
+            ctx.putImageData(data, 0, h);
+            break;
         }
+        this.countUp(type);
       },
       add2ndLine: function(event) {
         if(event.type='keypress') {
