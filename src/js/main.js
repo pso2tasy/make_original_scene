@@ -105,8 +105,8 @@ var app = function() {
       ratio.height = canvas.height / ratio.base.width;
       ratio.width  = canvas.width / ratio.base.height;
     }
-    // 1080 に対して70 の比率をもとにしているので。
     vm.fileName   = file.name;
+    // 1080 に対して70 の比率をもとにしているので。
     vm.maskHeight = parseInt(canvas.height * 70 / 1080);
     vintageApi = new VintageJS(canvas);
   };
