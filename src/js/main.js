@@ -27,7 +27,6 @@ var app = function() {
   var copyright = function(canvas) {
     var ctx    = canvas.getContext('2d');
     ctx.font = 'normal 400 ' + parseInt(18 * ratio.height).toString() + 'px Open Sans, sans-serif';
-    //resetShadow(ctx, 0, 0, 1, '#000');
     resetShadow(ctx, 0, 0, 1, 'rgba(32,32,32,0.2)');
     ctx.textAlign     = 'left';
     ctx.textBaseline  = 'bottom';
