@@ -27,11 +27,11 @@ var app = function() {
   var copyright = function(canvas) {
     var ctx    = canvas.getContext('2d');
     ctx.font = 'normal 400 ' + parseInt(18 * ratio.height).toString() + 'px Open Sans, sans-serif';
-    //resetShadow(ctx, 0, 0, 0, '#fff');
-    resetShadow(ctx, 0, 0, 1, 'rgba(96,96,96,0.2)');
+    //resetShadow(ctx, 0, 0, 1, '#000');
+    resetShadow(ctx, 0, 0, 1, 'rgba(32,32,32,0.2)');
     ctx.textAlign     = 'left';
     ctx.textBaseline  = 'bottom';
-    ctx.fillStyle     = 'rgba(255,255,255,0.5)';
+    ctx.fillStyle     = 'rgba(255,255,255,0.9)';
     console.log(canvas.height);
     var text = '\u00A9SEGA';
     var baseline = canvas.height - vm.maskHeight - (2 * ratio.height);
@@ -41,6 +41,7 @@ var app = function() {
     ctx.fillText(text , canvas.width - (10 * ratio.width) - ctx.measureText(text).width, baseline);
   };
   var caption = function(canvas) {
+    var captionColor = '#fff';
     var fontSize   = parseInt(35 * ratio.height);
     var lineHeight = fontSize + (fontSize * ratio.height * 0.3);
     var captionX   = canvas.width / 2;
@@ -49,12 +50,15 @@ var app = function() {
 
     ctx.textAlign    = 'center';
     ctx.textBaseline = 'bottom';
-    ctx.fillStyle    = '#fff';
+    ctx.fillStyle    = captionColor;
     ctx.font         = 'normal ' + fontSize.toString() + 'px cinecaption';
 
     // 何度も書いて無理やり縁取り
-    var fill = function(blur, offsetX, offsetY) {
-      resetShadow(ctx, blur, offsetX, offsetY, '#000');
+    var fill = function(blur, offsetX, offsetY, shadowColor) {
+      if(shadowColor == undefined) {
+        shadowColor = 'rgba(0,0,0,0.6)';
+      }
+      resetShadow(ctx, blur, offsetX, offsetY, shadowColor);
       if(vm.text1 != '' && vm.text2 != '') {
         ctx.fillText(vm.text1, captionX, captionY - lineHeight);
         ctx.fillText(vm.text2, captionX, captionY);
@@ -88,9 +92,7 @@ var app = function() {
     fill( 3,  0,  0);
     fill( 3,  0,  0);
     fill(20,  0,  0);
-    ctx.shadowColor  = '#333';
-    fill(20,  0,  0);
-    ctx.shadowColor  = '#000';
+    fill(20,  0,  0, 'rgba(48,48,48,0.6)');
     stroke(20, 0, 0);
     fill( 0,  0,  0);
   };
