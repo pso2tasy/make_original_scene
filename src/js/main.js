@@ -10,6 +10,14 @@ var app = function() {
     }
   };
 
+  var setImageToCanvas = function(file) {
+    if(file != undefined) {
+      image.onload = function() {
+        loadImage(canvas, this, file);
+      }
+      image.src = URL.createObjectURL(file);
+    }
+  };
   var canvas = document.getElementById('canvas');
   var resetShadow = function(ctx, blur, offsetX, offsetY, color) {
      ctx.shadowColor   = color;
@@ -31,7 +39,7 @@ var app = function() {
     ctx.textAlign     = 'left';
     ctx.textBaseline  = 'bottom';
     ctx.fillStyle     = 'rgba(255,255,255,0.9)';
-    console.log(canvas.height);
+
     var text = '\u00A9SEGA';
     var baseline = canvas.height - vm.maskHeight - (2 * ratio.height);
     if(vm.mask !== true) {
@@ -130,7 +138,8 @@ var app = function() {
       downloadReady  : false,
       display        : {
         line2 : false,
-      }
+      },
+      smartphone    : false
     },
     created: function() {
       var ua = window.navigator.userAgent.toLowerCase();
@@ -141,8 +150,25 @@ var app = function() {
       } else {
         this.msBrowser = true;
       }
+
+      if(ua.indexOf('linux; u; android ') != -1
+          || ua.indexOf('iphone; u') != -1
+          || ua.indexOf('ipad; u') != -1) {
+        this.smartphone = true;
+      }
+
+      // welcomeImage読み込み
+      if(this.smartphone == false) {
+        image.onload = function() {
+          loadImage(canvas, this, {'name': 'welcome.jpg'});
+        };
+        image.src = "./file/img/welcome.jpg";
+      }
     },
     methods: {
+      loadFromButton: function(evt) {
+        setImageToCanvas(evt.target.files[0]);
+      },
       move: function() {
         var ctx    = this.canvas.getContext('2d');
         var data = ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
@@ -259,12 +285,8 @@ var app = function() {
   });
 
   // ドラッグアンドドロップで画像を読み込む処理を追加。
-  dragOnDrop(canvas, image, {callback:{onload: loadImage}});
-
-  var welcome = new Image();
-  welcome.onload = function() {
-    loadImage(canvas, welcome, {'name': 'welcome.jpg'});
-  };
-  welcome.src = "./file/img/welcome.jpg";
+  dragOnDrop(function(file) {
+    setImageToCanvas(file);
+  });
 }();
 

@@ -44,6 +44,9 @@ html(lang="ja")
               input(type="text", v-model="text1", v-on:keypress="add2ndLine", placeholder="ここに文字を入れます。")
               span(v-on:click="add2ndLine", class="add_2nd_line flipflop", v-bind:class="{'display_inline-block': !display.line2}") ＋
               input(type="text", v-model="text2", class="flipflop", v-bind:class="{'display_inline': display.line2}", placeholder="にぎょうめ")
+
+            label(for="file", class="fileButton flipflop", v-bind:class="{'display_inline-block': smartphone}") がぞう
+              input#file(type="file", style="display:none", value="", v-on:change="loadFromButton")
             input(type="button", value="これでつくる", v-on:click="edit")
             a(href="{{imageData}}", download="{{fileName}}", class="flipflop", v-bind:class="{'display_inline-block': !msBrowser && downloadReady}") だうんろーど
             //- Microsoft Edge, Internet Explorer は download属性に対応していないのでこちら。

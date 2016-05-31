@@ -5,11 +5,9 @@
  * @author pso2tasy
  * @version 0.0.2
  *
- * canvas: 反映するcanvas
- * image:  Image Object
- * option:
- *   callback:
- *     drop: drop 処理後に呼ばれるコールバック関数。f(canvas, image, file)
+ * dragOnDrop(callback)
+ * callbackにcallback(file)としてファイルオブジェクトを渡す
+ *
  */
 (function(root, factory) {
     if(typeof exports === 'object') {
@@ -22,7 +20,7 @@
         root['dragOnDrop'] = factory();
     }
 }(this, function() {
-  var dragOnDrop = function(canvas, image, option)
+  var dragOnDrop = function(callback)
   {
     window.addEventListener("dragover", function(evt) {
       // デフォルト処理をOFF
@@ -30,17 +28,13 @@
     }, false);
   
     window.addEventListener("drop", function(evt) {
-      var ctx    = canvas.getContext("2d");
       // デフォルト処理をOFF
       evt.preventDefault();
       var file = evt.dataTransfer.files[0];
   
       if (!file.type.match(/^image\/(png|jpeg|gif)$/)) return;
+      callback(file);
   
-      image.onload = function() {
-        if(option.callback.onload !== 'undefined') option.callback.onload(canvas, image, file);
-      }
-      image.src = URL.createObjectURL(file);
     });
   }
   return dragOnDrop;
