@@ -43,6 +43,7 @@ html(lang="ja")
             #caption
               input(type="text", v-model="text1", v-on:keypress="add2ndLine", placeholder="ここに文字を入れます。")
               span(v-on:click="add2ndLine", class="add_2nd_line flipflop", v-bind:class="{'display_inline-block': !display.line2}") ＋
+                br
               input(type="text", v-model="text2", class="flipflop", v-bind:class="{'display_inline': display.line2}", placeholder="にぎょうめ")
 
             label(for="file", class="fileButton flipflop", v-bind:class="{'display_inline-block': smartphone}") がぞう
@@ -56,12 +57,23 @@ html(lang="ja")
             label(for="copyright")
               //- そのままだと&がエスケープ処理されるので。
               span.copyright !{"&#x00A9;"}SEGA
+              br
+
+            .child
+              input#copyrightType1(type="radio", value="0", v-model="copyrightType")
+              label(for="copyrightType1") なか
+              br
+              input#copyrightType2(type="radio", value="1", v-model="copyrightType")
+              label(for="copyrightType2") そと
+
             input#mask(type="checkbox", v-model="mask")
             label(for="mask") ますく
+              br
             input#toJpeg(type="checkbox", v-model="toJpeg")
             label(for="toJpeg") あっしゅく
+              br
             input#sequence(type="checkbox", v-model="sequence")
-            label(for="sequence") れんぞく（ファイル名が保持されません。）
+            label(for="sequence") れんぞく
         #thanks
           p 
             | 使用フォント 

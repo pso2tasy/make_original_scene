@@ -1,4 +1,8 @@
 var app = function() {
+  var copyrightType = {
+    default: 0,
+    onMask: 1,
+  };
   var vintageApi;
   var image  = new Image();
   var ratio  = {
@@ -32,7 +36,7 @@ var app = function() {
      ctx.fillRect(0, 0, canvas.width, vm.maskHeight);
      ctx.fillRect(0, canvas.height, canvas.width, -vm.maskHeight);
   };
-  var copyright = function(canvas) {
+  var copyright = function(canvas, type) {
     var ctx    = canvas.getContext('2d');
     ctx.font = 'normal 400 ' + parseInt(18 * ratio.height).toString() + 'px Open Sans, sans-serif';
     resetShadow(ctx, 0, 0, 1, 'rgba(32,32,32,0.2)');
@@ -42,7 +46,7 @@ var app = function() {
 
     var text = '\u00A9SEGA';
     var baseline = canvas.height - vm.maskHeight - (2 * ratio.height);
-    if(vm.mask !== true) {
+    if(vm.mask !== true || type == copyrightType.onMask) {
       baseline = canvas.height - (2 * ratio.height);
     }
     ctx.fillText(text , canvas.width - (10 * ratio.width) - ctx.measureText(text).width, baseline);
@@ -127,6 +131,7 @@ var app = function() {
       text1          : '',
       text2          : '',
       copyright      : true, // (C)SEGA を入れるかどうか
+      copyrightType  : 0, // (C)SEGA タイプ。
       mask           : true, // 上下の黒帯 を入れるかどうか
       maskHeight     : 70,   // 上下の黒帯 px 
       canvas         : canvas,
@@ -151,9 +156,9 @@ var app = function() {
         this.msBrowser = true;
       }
 
-      if(ua.indexOf('linux; u; android ') != -1
-          || ua.indexOf('iphone; u') != -1
-          || ua.indexOf('ipad; u') != -1) {
+      if(ua.indexOf('android ') != -1
+          || ua.indexOf('iphone') != -1
+          || ua.indexOf('ipad') != -1) {
         this.smartphone = true;
       }
 
@@ -247,7 +252,7 @@ var app = function() {
         this.fileName  = changeExt(this.fileName, this.toJpeg);
 
         if(this.copyright) {
-          copyright(canvas);
+          copyright(canvas, this.copyrightType);
         }
 
         if(this.sequence === true) {
@@ -261,6 +266,7 @@ var app = function() {
         this.downloadReady = true;
       },
       msDownload: function() {
+        console.log("111");
         // http://qiita.com/uin010bm/items/150003f016287750cf34
         function toBlob(base64, contentType) {
           var bin = atob(base64.replace(/^.*,/, ''));

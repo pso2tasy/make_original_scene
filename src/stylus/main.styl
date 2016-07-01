@@ -10,10 +10,13 @@ fontMainColor    = #333
 
 accentColorBlue  = #99f
 accentColorGreen = #9c9
+fontSizeDefault  = 14px
+fontSizeSmall    = small
+fontFamilyDefault = 'cinecaption'
 //- accentColorRed   = #d13081
 
 @font-face
-  font-family 'cinecaption'
+  font-family fontFamilyDefault
   src local('cinecaption')
   , url('../file/font/cinecaption2.28.woff')  format('woff') 
   , url('../file/font/cinecaption2.28.ttf')  format('truetype') 
@@ -46,9 +49,9 @@ html, body
   height 100%
 body
   color fontMainColor
-  font-family 'cinecaption'
+  font-family fontFamilyDefault
   background-color subColor
-  font-size 14px
+  font-size fontSizeDefault
 h1
   font-size 2em
   margin 0
@@ -94,29 +97,31 @@ header
 #control
   width   canvasWidth
   text-align center
-  margin  0 auto 1em auto
+  margin 1em auto 1em auto
 
   //- 下のinputボタンと比べて、line-height 1emが追加になっているだけ。
   //- 機能が定着したら整理しないと……。
   .fileButton
     line-height 1em
-    font-family 'cinecaption'
-    font-size 14px
+    font-family fontFamilyDefault
+    font-size fontSizeDefault
     border-radius 5px 5px
     border 2px accentColorBlue solid
     padding 4px
     background-color mainColor
     margin 0em 1em
     cursor pointer
+    width 7em
   input
-    font-family 'cinecaption'
-    font-size 14px
+    font-family fontFamilyDefault
+    font-size fontSizeDefault
     border-radius 5px 5px
     border 2px accentColorBlue solid
     padding 4px
     background-color mainColor
     margin 0em 1em
     cursor pointer
+    width 7em
   input:focus
     outline 1px dotted accentColorBlue
   input[type=text]
@@ -124,17 +129,25 @@ header
   input[type=text]:focus
     outline 0
   #filter
-    margin 0.5em 0em;
-    input
+    margin 0.5em 0em
+    width 15em
+    display table-cell
+    text-align justify
+    ,input
       border 2px accentColorGreen solid
-      margin 0em .5em
+      margin 0 1em .5em 1em
+      width 5em
     .memory
       display inline-block
-      margin 0 0 0 2em
+      margin 1em 0 0 0
       input
         border 2px #aaa solid
   #makeIt
-    margin 0.5em 0em
+    display table-cell
+    vertical-align middle
+    margin .5em .5em
+    padding 0 1em
+    width 40em
     input
       margin 0em .5em
       border-radius 5px
@@ -157,8 +170,8 @@ header
     a
       line-height normal
       vertical-align bottom
-      font-family 'cinecaption'
-      font-size 14px
+      font-family fontFamilyDefault
+      font-size fontSizeDefault
       border-radius 5px
       border 2px accentColorBlue solid
       padding 4px
@@ -174,7 +187,10 @@ header
       color  fontMainColor
       cursor pointer
   #setting
-    margin 0.5em 0em;
+    display table-cell
+    text-align left
+    margin 0.5em 0em
+    width 9em
     input[type=checkbox]
       cursor pointer
       margin  0 0 0 1em
@@ -183,7 +199,25 @@ header
       height  1.3em
       vertical-align bottom
     label
+      font-family fontFamilyDefault
       cursor pointer
+      font-size fontSizeDefault
+    .child
+      margin-left 2em
+      font-size fontSizeSmall
+      input[type=radio]
+        font-size fontSizeSmall
+        cursor pointer
+        margin  0 0 0 1em
+        padding 0
+        width   1.3em
+        height  1.3em
+        vertical-align bottom
+      label
+        font-family fontFamilyDefault
+        font-size fontSizeSmall
+        cursor pointer
+        margin-left 0
     //-input[type=checkbox]:checked
 #thanks
   text-align center
