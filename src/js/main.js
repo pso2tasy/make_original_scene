@@ -1,3 +1,62 @@
+var Mask = function(canvas, print, height) {
+  this.print  = print;
+  this.height = height;
+  this.canvas = canvas;
+  this.setCanvas = function(canvas) {
+    this.canvas = canvas;
+  };
+  this.drawMask = function(height) {
+    if(this.print != true) {
+      return;
+    }
+    var ctx    = canvas.getContext('2d');
+    ctx.shadowColor   = '#000';
+    ctx.shadowBlur    = 0;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
+    ctx.fillStyle     = '#000';
+    ctx.fillRect(0, 0, canvas.width, height);
+    ctx.fillRect(0, canvas.height, canvas.width, -height);
+  };
+};
+
+var Copyright = function(canvas, print, baseline) {
+  this.canvas = canvas;
+  this.ratio = {
+    width : 1,
+    height : 1,
+  };
+  this.baseline = baseline;
+  this.setBaseline = function(baseline) {
+    this.baseline = baseline;
+  };
+  this.setRatio = function(ratio) {
+    this.ratio.width = ratio.width;
+    this.ratio.height = ratio.height;
+  };
+  this.setCanvas = function(canvas) {
+    this.canvas = canvas;
+  };
+  this.print = print;
+  this.text  = '\u00A9SEGA';
+  this.draw = function() {
+    var ctx    = this.canvas.getContext('2d');
+
+    ctx.font = 'normal 400 ' + parseInt(18 * this.ratio.height).toString() + 'px Open Sans, sans-serif';
+    ctx.shadowColor   = 'rgba(32,32,32,0.2)';
+    ctx.shadowBlur    = 0;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 1;
+    ctx.textAlign     = 'left';
+    ctx.textBaseline  = 'bottom';
+    ctx.fillStyle     = 'rgba(255,255,255,0.9)';
+
+    console.log(this.ratio.width);
+    console.log(ctx.measureText(this.text).width);
+    ctx.fillText(this.text , this.canvas.width - (10 * this.ratio.width) - ctx.measureText(this.text).width, this.baseline);
+  };
+};
+
 var app = function() {
   var copyrightType = {
     default: 0,
@@ -22,41 +81,38 @@ var app = function() {
       image.src = URL.createObjectURL(file);
     }
   };
-  var canvas = document.getElementById('canvas');
-  var resetShadow = function(ctx, blur, offsetX, offsetY, color) {
-     ctx.shadowColor   = color;
-     ctx.shadowBlur    = blur;
-     ctx.shadowOffsetX = offsetX;
-     ctx.shadowOffsetY = offsetY;
-  };
-  var mask   = function(canvas) {
-     var ctx    = canvas.getContext('2d');
-     resetShadow(ctx, 0, 0, 0, '#000');
-     ctx.fillStyle     = '#000';
-     ctx.fillRect(0, 0, canvas.width, vm.maskHeight);
-     ctx.fillRect(0, canvas.height, canvas.width, -vm.maskHeight);
-  };
-  var copyright = function(canvas, type) {
-    var ctx    = canvas.getContext('2d');
-    ctx.font = 'normal 400 ' + parseInt(18 * ratio.height).toString() + 'px Open Sans, sans-serif';
-    resetShadow(ctx, 0, 0, 1, 'rgba(32,32,32,0.2)');
-    ctx.textAlign     = 'left';
-    ctx.textBaseline  = 'bottom';
-    ctx.fillStyle     = 'rgba(255,255,255,0.9)';
+  var canvas    = document.getElementById('canvas');
+  var copyright = new Copyright(canvas, true, 0);
+  var mask      = new Mask(canvas, true, 70);
 
-    var text = '\u00A9SEGA';
-    var baseline = canvas.height - vm.maskHeight - (2 * ratio.height);
-    if(vm.mask !== true || type == copyrightType.onMask) {
+  var resetShadow = function(ctx, blur, offsetX, offsetY, color) {
+    ctx.shadowColor   = color;
+    ctx.shadowBlur    = blur;
+    ctx.shadowOffsetX = offsetX;
+    ctx.shadowOffsetY = offsetY;
+  };
+  var drawCopyright = function(canvas, type) {
+    var ctx    = canvas.getContext('2d');
+    var position = {
+      x : 0,
+      y : 0,
+    };
+    var baseline = canvas.height - mask.height - (2 * ratio.height);
+    if(mask.print !== true || type == copyrightType.onMask) {
       baseline = canvas.height - (2 * ratio.height);
     }
-    ctx.fillText(text , canvas.width - (10 * ratio.width) - ctx.measureText(text).width, baseline);
+    copyright.setBaseline(baseline);
+    copyright.setRatio(ratio);
+    copyright.setCanvas(canvas);
+    copyright.draw();
   };
+
   var caption = function(canvas) {
     var captionColor = '#fff';
     var fontSize   = parseInt(35 * ratio.height);
     var lineHeight = fontSize + (fontSize * ratio.height * 0.3);
     var captionX   = canvas.width / 2;
-    var captionY   = canvas.height - vm.maskHeight - (20 * ratio.height);
+    var captionY   = canvas.height - mask.height - (20 * ratio.height);
     var ctx        = canvas.getContext('2d');
 
     ctx.textAlign    = 'center';
@@ -121,7 +177,7 @@ var app = function() {
     }
     vm.fileName   = file.name;
     // 1080 に対して70 の比率をもとにしているので。
-    vm.maskHeight = parseInt(canvas.height * 70 / 1080);
+    mask.height = parseInt(canvas.height * 70 / 1080);
     vintageApi = new VintageJS(canvas);
   };
 
@@ -130,10 +186,14 @@ var app = function() {
     data: {
       text1          : '',
       text2          : '',
-      copyright      : true, // (C)SEGA を入れるかどうか
-      copyrightType  : 0, // (C)SEGA タイプ。
-      mask           : true, // 上下の黒帯 を入れるかどうか
-      maskHeight     : 70,   // 上下の黒帯 px 
+      copyrightType  : copyrightType,
+      setting : {
+        copyright : {
+          print: true, // (C)SEGA ON/OFF
+          type : copyrightType.default,
+        },
+      },
+      mask           : mask, // 上下の黒帯 を入れるかどうか
       canvas         : canvas,
       imageData      : null,
       fileName       : '',
@@ -177,7 +237,7 @@ var app = function() {
       move: function() {
         var ctx    = this.canvas.getContext('2d');
         var data = ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
-        var h = (parseInt)(this.maskHeight / 2);
+        var h = (parseInt)(mask.height / 2);
         ctx.clearRect(0, 0, this.canvas.width, h);
         ctx.putImageData(data, 0, h);
       },
@@ -243,16 +303,15 @@ var app = function() {
           document.getElementById('control').appendChild(image);
         };
 
-        if(this.mask) {
-          mask(canvas);
-        }
+        mask.setCanvas(canvas);
+        mask.drawMask(mask.height);
 
         caption(canvas);
 
         this.fileName  = changeExt(this.fileName, this.toJpeg);
 
-        if(this.copyright) {
-          copyright(canvas, this.copyrightType);
+        if(this.setting.copyright.print) {
+          drawCopyright(canvas, this.setting.copyright.type);
         }
 
         if(this.sequence === true) {

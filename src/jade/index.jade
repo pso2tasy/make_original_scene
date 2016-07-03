@@ -53,20 +53,20 @@ html(lang="ja")
             //- Microsoft Edge, Internet Explorer は download属性に対応していないのでこちら。
             input(type="button", value="だうんろーど", v-on:click="msDownload", class="flipflop", v-bind:class="{'display_inline': msBrowser && downloadReady}")
           #setting
-            input#copyright(type="checkbox", v-model="copyright")
+            input#copyright(type="checkbox", v-model="setting.copyright.print")
             label(for="copyright")
               //- そのままだと&がエスケープ処理されるので。
               span.copyright !{"&#x00A9;"}SEGA
               br
 
             .child
-              input#copyrightType1(type="radio", value="0", v-model="copyrightType")
+              input#copyrightType1(type="radio", value="{{copyrightType.default}}", v-model="setting.copyright.type")
               label(for="copyrightType1") なか
               br
-              input#copyrightType2(type="radio", value="1", v-model="copyrightType")
+              input#copyrightType2(type="radio", value="{{copyrightType.onMask}}", v-model="setting.copyright.type")
               label(for="copyrightType2") そと
 
-            input#mask(type="checkbox", v-model="mask")
+            input#mask(type="checkbox", v-model="mask.print")
             label(for="mask") ますく
               br
             input#toJpeg(type="checkbox", v-model="toJpeg")
