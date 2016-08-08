@@ -57,6 +57,54 @@ var Copyright = function(canvas, print, baseline) {
   };
 };
 
+var twitter = function(text, images) {
+  var child;
+  var request = superagent;
+  var upload = function(token, images) {
+    request
+      .post('https://asp.tasy.space/myscene/upload.php')
+      .field('token', token)
+      .attach('images[0]', images[0])
+      .end(function(err, res) {
+        tweet(token);
+    });
+  }
+  var tweet = function(token) {
+    child.location.href = 'https://asp.tasy.space/myscene/tweet.php?tweet='+text+'&token='+token;
+  }
+
+  child = window.open();
+  request
+    .get('https://asp.tasy.space/myscene/start.php')
+    .end(function(err, res){
+      var token = res.body.token;
+      if(typeof images === 'undefined' || images.length == 0) {
+        tweet(token);
+        return;
+      }
+      upload(token, images);
+  });
+}
+
+// http://qiita.com/uin010bm/items/150003f016287750cf34
+var toBlob = function(base64, contentType) {
+  console.log('toBlob type:' + contentType);
+  var bin = atob(base64.replace(/^.*,/, ''));
+  var buffer = new Uint8Array(bin.length);
+  for (var i = 0; i < bin.length; i++) {
+      buffer[i] = bin.charCodeAt(i);
+  }
+  try{
+      var blob = new Blob([buffer.buffer], {
+          type: contentType
+      });
+  }catch (e){
+      return false;
+  }
+  return blob;
+}
+
+
 var app = function() {
   var copyrightType = {
     default: 0,
@@ -180,7 +228,6 @@ var app = function() {
     mask.height = parseInt(canvas.height * 70 / 1080);
     vintageApi = new VintageJS(canvas);
   };
-
   var vm = new Vue({
     el: '#application',
     data: {
@@ -204,7 +251,8 @@ var app = function() {
       display        : {
         line2 : false,
       },
-      smartphone    : false
+      smartphone    : false,
+      tweetText     : ''
     },
     created: function() {
       var ua = window.navigator.userAgent.toLowerCase();
@@ -233,6 +281,14 @@ var app = function() {
     methods: {
       loadFromButton: function(evt) {
         setImageToCanvas(evt.target.files[0]);
+      },
+      tweet: function(){
+        var images = [];
+        var fileType = this.fileType(this.toJpeg);
+        
+        console.log('tweet with type:'+fileType);
+        images.push(toBlob(this.canvas.toDataURL(fileType), fileType));
+        twitter(this.tweetText, images);
       },
       move: function() {
         var ctx    = this.canvas.getContext('2d');
@@ -325,23 +381,6 @@ var app = function() {
         this.downloadReady = true;
       },
       msDownload: function() {
-        console.log("111");
-        // http://qiita.com/uin010bm/items/150003f016287750cf34
-        function toBlob(base64, contentType) {
-          var bin = atob(base64.replace(/^.*,/, ''));
-          var buffer = new Uint8Array(bin.length);
-          for (var i = 0; i < bin.length; i++) {
-              buffer[i] = bin.charCodeAt(i);
-          }
-          try{
-              var blob = new Blob([buffer.buffer], {
-                  type: contentType
-              });
-          }catch (e){
-              return false;
-          }
-          return blob;
-        }
         var fileType = this.fileType(this.toJpeg);
         var image    = this.canvas.toDataURL(fileType);
         navigator.msSaveBlob(toBlob(image, fileType), this.fileName);
@@ -353,5 +392,6 @@ var app = function() {
   dragOnDrop(function(file) {
     setImageToCanvas(file);
   });
+
 }();
 

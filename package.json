@@ -12,8 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/pso2tasy/make_original_scene.git"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "dependencies": {
     "browser-sync": "^2.10.1",
     "concat": "^1.0.0",
@@ -25,6 +24,7 @@
     "gulp-watch": "^4.3.5",
     "jade": "^1.11.0",
     "stylus": "^0.53.0",
+    "superagent": "^2.1.0",
     "uglify": "^0.1.5",
     "vue": "^1.0.13"
   }
