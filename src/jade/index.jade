@@ -41,9 +41,10 @@ html(lang="ja")
               input(type="button", value="ろーど", v-on:click="effect('reset')")
           #makeIt
             #caption
+              //- +の分センタリングがずれるのでダミー用。watch時はpretty:trueの影響で半角スペースが挿入されるので、表示が少しずれるものの、compileでは平気。
+              span(v-on:click="add2ndLine", class="add_2nd_line flipflop", v-bind:class="{'display_inline-block': !display.line2}") 　
               input(type="text", v-model="text1", v-on:keypress="add2ndLine", placeholder="ここに文字を入れます。")
               span(v-on:click="add2ndLine", class="add_2nd_line flipflop", v-bind:class="{'display_inline-block': !display.line2}") ＋
-                br
               input(type="text", v-model="text2", class="flipflop", v-bind:class="{'display_inline': display.line2}", placeholder="にぎょうめ")
 
             label(for="file", class="fileButton flipflop", v-bind:class="{'display_inline-block': smartphone}") がぞう
@@ -53,8 +54,11 @@ html(lang="ja")
             //- Microsoft Edge, Internet Explorer は download属性に対応していないのでこちら。
             input(type="button", value="だうんろーど", v-on:click="msDownload", class="flipflop", v-bind:class="{'display_inline': msBrowser && downloadReady}")
 
-            #tweet(class="flipflop", v-bind:class="{'display_inline': downloadReady}")
+            input(type="button", value="つぶやく", v-on:click="showTweetBox", class="flipflop", v-bind:class="{'display_inline': !tweetBoxVisibility && downloadReady}")
+
+            #tweetBox(class="flipflop", v-bind:class="{'display_block': tweetBoxVisibility}")
               textarea#text(v-model="tweetText")
+              br
               input(type="button", value="つぶやく", v-on:click="tweet")
           #setting
             input#copyright(type="checkbox", v-model="setting.copyright.print")

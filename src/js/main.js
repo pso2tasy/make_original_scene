@@ -252,8 +252,9 @@ var app = function() {
       display        : {
         line2 : false,
       },
-      smartphone    : false,
-      tweetText     : ''
+      smartphone         : false,
+      tweetBoxVisibility : false,
+      tweetText          : ''
     },
     created: function() {
       var ua = window.navigator.userAgent.toLowerCase();
@@ -283,13 +284,16 @@ var app = function() {
       loadFromButton: function(evt) {
         setImageToCanvas(evt.target.files[0]);
       },
-      tweet: function(){
+      tweet: function() {
         var images = [];
         var fileType = this.fileType(this.toJpeg);
         
         images.push(toBlob(this.canvas.toDataURL(fileType), fileType));
         var twitter = new Twitter;
         twitter.tweetWithImages(this.tweetText, images);
+      },
+      showTweetBox: function() {
+        this.tweetBoxVisibility = true;
       },
       move: function() {
         var ctx    = this.canvas.getContext('2d');
