@@ -71,7 +71,7 @@ var Twitter = function() {
     });
   }
   this.tweet = function(childWindow, token, text) {
-    childWindow.location.href = self.endPoint + 'tweet.php?tweet='+text+'&token='+token;
+    childWindow.location.href = self.endPoint + 'tweet.php?tweet='+encodeURIComponent(text)+'&token='+token;
   }
 
   this.tweetWithImages = function(text, images) {
