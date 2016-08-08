@@ -57,7 +57,7 @@ html(lang="ja")
             input(type="button", value="つぶやく", v-on:click="showTweetBox", class="flipflop", v-bind:class="{'display_inline': !tweetBoxVisibility && downloadReady}")
 
             #tweetBox(class="flipflop", v-bind:class="{'display_block': tweetBoxVisibility}")
-              textarea#text(v-model="tweetText")
+              textarea#text(v-model="tweetText") #ssに字幕を入れてオリジナルシーンを作ってみる ジェネレーター"
               br
               input(type="button", value="つぶやく", v-on:click="tweet")
           #setting
