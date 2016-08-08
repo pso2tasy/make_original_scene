@@ -295,6 +295,12 @@ var app = function() {
       showTweetBox: function() {
         this.tweetBoxVisibility = true;
       },
+      addTag: function() {
+        this.tweetText += ' #ssに字幕を入れてオリジナルシーンを作ってみる';
+      },
+      addSiteUrl: function() {
+        this.tweetText += ' https://pso2.tasy.space/myscene';
+      },
       move: function() {
         var ctx    = this.canvas.getContext('2d');
         var data = ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
