@@ -9,9 +9,9 @@ subColor         = #3b3b3b
 fontMainColor    = #333
 
 accentColorBlue   = #30d0cf
-accentColorBrown  = #d18130
+accentColorBrown  = #0288d1
 accentColorPurple = #d13081
-accentColorGray   = #aaa 
+accentColorGray   = #b3e5fc
 fontSizeDefault  = 14px
 fontSizeSmall    = small
 fontFamilyDefault = 'cinecaption'
@@ -158,9 +158,9 @@ header
       vertical-align bottom
     #caption
       input[type=text]:placeholder-shown
-        color accentColorBrown
+        color accentColorGray
       input[type=text]::-webkit-input-placeholder
-        color accentColorBrown
+        color accentColorGray
       input[type=text]
         cursor text
         margin .5em 0
@@ -182,6 +182,7 @@ header
       textarea::-webkit-input-placeholder
         color accentColorBlue
       textarea
+        resize none
         outline 0
         color accentColorBlue
         border 2px accentColorBlue solid
@@ -189,9 +190,10 @@ header
         font-family fontFamilyDefault
         background-color mainColor
         padding .3em
-        margin 0em 0em
+        margin .5em 0
         border-radius 5px
         width 35em
+        height 3em
     a
       line-height normal
       vertical-align bottom

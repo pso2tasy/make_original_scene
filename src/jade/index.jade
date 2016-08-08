@@ -50,16 +50,19 @@ html(lang="ja")
             label(for="file", class="fileButton flipflop", v-bind:class="{'display_inline-block': smartphone}") がぞう
               input#file(type="file", style="display:none", value="", v-on:change="loadFromButton")
             input(type="button", value="これでつくる", v-on:click="edit")
-            a(href="{{imageData}}", download="{{fileName}}", class="flipflop", v-bind:class="{'display_inline-block': !msBrowser && downloadReady}") だうんろーど
-            //- Microsoft Edge, Internet Explorer は download属性に対応していないのでこちら。
-            input(type="button", value="だうんろーど", v-on:click="msDownload", class="flipflop", v-bind:class="{'display_inline': msBrowser && downloadReady}")
-
             input(type="button", value="つぶやく", v-on:click="showTweetBox", class="flipflop", v-bind:class="{'display_inline': !tweetBoxVisibility && downloadReady}")
 
+            a(href="{{imageData}}", download="{{fileName}}", class="flipflop", v-bind:class="{'display_inline-block': !msBrowser && downloadReady}") だうんろーど
+            //- Microsoft Edge, Internet Explorer は download属性に対応していないのでこちら。
+
+            input(type="button", value="だうんろーど", v-on:click="msDownload", class="flipflop", v-bind:class="{'display_inline': msBrowser && downloadReady}")
+
             #tweetBox(class="flipflop", v-bind:class="{'display_block': tweetBoxVisibility}")
-              textarea#text(v-model="tweetText") #ssに字幕を入れてオリジナルシーンを作ってみる ジェネレーター"
+              textarea#text(v-model="tweetText")
               br
+              input(type="button", value="タグいれ", v-on:click="addTag")
               input(type="button", value="つぶやく", v-on:click="tweet")
+              input(type="button", value="せんでん", v-on:click="addSiteUrl")
           #setting
             input#copyright(type="checkbox", v-model="setting.copyright.print")
             label(for="copyright")
