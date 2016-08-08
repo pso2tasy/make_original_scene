@@ -57,33 +57,34 @@ var Copyright = function(canvas, print, baseline) {
   };
 };
 
-var twitter = function(text, images) {
-  var child;
-  var request = superagent;
-  var upload = function(token, images) {
-    request
-      .post('https://asp.tasy.space/myscene/upload.php')
+var Twitter = function() {
+  self = this;
+  this.request = superagent;
+  this.endPoint = 'https://asp.tasy.space/myscene/';
+  this.uploadAndTweet = function(childWindow, token, text, images) {
+    self.request
+      .post(self.endPoint + 'upload.php')
       .field('token', token)
       .attach('images[0]', images[0])
       .end(function(err, res) {
-        tweet(token);
+        self.tweet(childWindow, token, text);
     });
   }
-  var tweet = function(token) {
-    child.location.href = 'https://asp.tasy.space/myscene/tweet.php?tweet='+text+'&token='+token;
+  this.tweet = function(childWindow, token, text) {
+    childWindow.location.href = self.endPoint + 'tweet.php?tweet='+text+'&token='+token;
   }
 
-  child = window.open();
-  request
-    .get('https://asp.tasy.space/myscene/start.php')
-    .end(function(err, res){
-      var token = res.body.token;
-      if(typeof images === 'undefined' || images.length == 0) {
-        tweet(token);
-        return;
-      }
-      upload(token, images);
-  });
+  this.tweetWithImages = function(text, images) {
+    if(typeof images === 'undefined' || images.length == 0) {
+      // 画像が無ければそこでおしまい。
+      return;
+    }
+    self.request
+      .get(self.endPoint + 'start.php')
+      .end(function(err, res){
+        self.uploadAndTweet(window.open(), res.body.token, text, images);
+    });
+  }
 }
 
 // http://qiita.com/uin010bm/items/150003f016287750cf34
@@ -286,9 +287,9 @@ var app = function() {
         var images = [];
         var fileType = this.fileType(this.toJpeg);
         
-        console.log('tweet with type:'+fileType);
         images.push(toBlob(this.canvas.toDataURL(fileType), fileType));
-        twitter(this.tweetText, images);
+        var twitter = new Twitter;
+        twitter.tweetWithImages(this.tweetText, images);
       },
       move: function() {
         var ctx    = this.canvas.getContext('2d');
