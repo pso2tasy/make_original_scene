@@ -84,7 +84,7 @@ var Twitter = function() {
     self.request
       .get(self.endPoint + 'start.php')
       .end(function(err, res){
-        self.uploadAndTweet(window.open(), res.body.token, text, images);
+        self.uploadAndTweet(window.open('uploading.html'), res.body.token, text, images);
     });
   }
 }
