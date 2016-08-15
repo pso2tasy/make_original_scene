@@ -57,11 +57,23 @@ html(lang="ja")
 
             input(type="button", value="だうんろーど", v-on:click="msDownload", class="flipflop", v-bind:class="{'display_inline': msBrowser && downloadReady}")
 
-            #tweetBox(class="flipflop", v-bind:class="{'display_block': tweetBoxVisibility}")
-              textarea#text(v-model="tweetText")
-              br
-              input(type="button", value="タグいれ", v-on:click="addTag")
+            #tweetBox.flipflop(v-bind:class="{'display_block': tweetBoxVisibility}")
+              #preview
+                .tweetLike
+                  textarea#text(v-model="tweetText" placeholder="ここにつぶやきを入れます。")
+                  .imageBox
+                    .imageMain
+                      img(src="{{images[0]}}")
+                    .imageSubs
+                      .imageSub
+                        img(src="{{images[1]}}")
+                      .imageSub
+                        img(src="{{images[2]}}")
+                      .imageSub
+                        img(src="{{images[3]}}")
+                  p.description 「これでつくる」のたびに、四まいまでふえます。
               input(type="button", value="つぶやく", v-on:click="tweet")
+              input(type="button", value="タグいれ", v-on:click="addTag")
               input(type="button", value="せんでん", v-on:click="addSiteUrl")
           #setting
             input#copyright(type="checkbox", v-model="setting.copyright.print")
@@ -84,7 +96,7 @@ html(lang="ja")
             label(for="toJpeg") あっしゅく
               br
             input#sequence(type="checkbox", v-model="sequence")
-            label(for="sequence") れんぞく
+            label(for="sequence") ふくすう
         #thanks
           p 
             | 使用フォント 

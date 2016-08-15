@@ -175,7 +175,36 @@ header
         font-size 1em
         cursor pointer
     #tweetBox
-      margin .5em .5em
+      margin 2em .5em
+      .description
+        text-align left
+      #preview
+        color accentColorBlue
+        border-radius 5px
+        border 2px accentColorBlue solid
+        padding 1em .5em
+        margin .5em 1em
+        .imageBox
+          display flex
+          flex-direction row
+          justify-content center
+          .imageMain
+            width 360px
+            height 360px
+            overflow hidden
+            img
+              max-height 360px
+          .imageSubs
+            flex-direction column
+            .imageSub
+              width 120px
+              height 120px
+              overflow hidden
+              img
+                max-height 120px
+
+
+
       input
         color accentColorBlue
         border 2px accentColorBlue solid
@@ -185,7 +214,7 @@ header
         resize none
         outline 0
         color accentColorBlue
-        border 2px accentColorBlue solid
+        border 0
         font-size fontSizeDefault
         font-family fontFamilyDefault
         background-color mainColor
