@@ -81,10 +81,11 @@ var Twitter = function() {
       // 画像が無ければそこでおしまい。
       return;
     }
+    var child = window.open('uploading.html');
     self.request
       .get(self.endPoint + 'start.php')
       .end(function(err, res){
-        self.uploadAndTweet(window.open('uploading.html'), res.body.token, text, images);
+        self.uploadAndTweet(child, res.body.token, text, images);
     });
   }
 }
