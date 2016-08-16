@@ -250,7 +250,6 @@ var app = function() {
       imageData      : null,
       fileName       : '',
       toJpeg         : true,
-      sequence       : false,
       msBrowser      : false,
       downloadReady  : false,
       display        : {
@@ -368,13 +367,6 @@ var app = function() {
           }
           return fileName.replace(/.jpg$/, '.png').replace(/.jpeg$/, '.png');
         };
-        var appendSequence = function() {
-          var image  = new Image();
-          image.src    = canvas.toDataURL();
-          image.width  = '640'; 
-          image.height = '360';
-          document.getElementById('control').appendChild(image);
-        };
 
         mask.setCanvas(canvas);
         mask.drawMask(mask.height);
@@ -385,10 +377,6 @@ var app = function() {
 
         if(this.setting.copyright.print) {
           drawCopyright(canvas, this.setting.copyright.type);
-        }
-
-        if(this.sequence === true) {
-          appendSequence(event);
         }
 
         if(this.msBrowser === false) {
