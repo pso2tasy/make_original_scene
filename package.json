@@ -14,18 +14,18 @@
   },
   "devDependencies": {},
   "dependencies": {
-    "browser-sync": "^2.10.1",
-    "concat": "^1.0.0",
-    "gulp": "^3.9.0",
-    "gulp-concat": "^2.6.0",
+    "browser-sync": "^2.18.13",
+    "concat": "^1.0.3",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
     "gulp-jade": "^1.1.0",
-    "gulp-preservetime": "^1.0.0",
-    "gulp-stylus": "^2.1.2",
-    "gulp-watch": "^4.3.5",
+    "gulp-preservetime": "^1.2.1",
+    "gulp-stylus": "^2.6.0",
+    "gulp-watch": "^4.3.11",
     "jade": "^1.11.0",
     "stylus": "^0.53.0",
-    "superagent": "^2.1.0",
+    "superagent": "^2.3.0",
     "uglify": "^0.1.5",
-    "vue": "^1.0.13"
+    "vue": "^1.0.28"
   }
 }
