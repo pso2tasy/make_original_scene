@@ -4,8 +4,8 @@ html(lang="ja")
   head
     title= title
     link(href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css')
-    link(rel="stylesheet", href="css/app.css")
-    link(rel="icon", sizes="16x16 32x32", href="favicon.png", type="image/png")
+    link(rel="stylesheet" href="css/app.css")
+    link(rel="icon" sizes="16x16 32x32" href="favicon.png" type="image/png")
     meta(charset="UTF-8")
   body
     header
@@ -28,63 +28,72 @@ html(lang="ja")
             canvas#canvas(v-model="canvas")
         #control
           #filter
-            input(type="button", value="みほん", v-on:click="effect('sample')")
-            input(type="button", value="あやしげ", v-on:click="effect('vignette')")
-            input(type="button", value="めりはり", v-on:click="effect('contrast+')")
-            input(type="button", value="かげうす", v-on:click="effect('desaturate')")
-            input(type="button", value="あかるく", v-on:click="effect('brightness+')")
-            input(type="button", value="くらく", v-on:click="effect('brightness-')")
-            input(type="button", value="のいず", v-on:click="effect('noise')")
-            input(type="button", value="さげる", v-on:click="move")
+            input(type="button" value="みほん"   v-on:click="effect('sample')")
+            input(type="button" value="あやしげ" v-on:click="effect('vignette')")
+            input(type="button" value="めりはり" v-on:click="effect('contrast+')")
+            input(type="button" value="かげうす" v-on:click="effect('desaturate')")
+            input(type="button" value="あかるく" v-on:click="effect('brightness+')")
+            input(type="button" value="くらく"   v-on:click="effect('brightness-')")
+            input(type="button" value="のいず"   v-on:click="effect('noise')")
+            input(type="button" value="さげる"   v-on:click="move")
             span.memory
-              input(type="button", value="せーぶ", v-on:click="effect('apply')")
-              input(type="button", value="ろーど", v-on:click="effect('reset')")
+              input(type="button" value="せーぶ" v-on:click="effect('apply')")
+              input(type="button" value="ろーど" v-on:click="effect('reset')")
           #makeIt
             #caption
               //- +の分センタリングがずれるのでダミー用。watch時はpretty:trueの影響で半角スペースが挿入されるので、表示が少しずれるものの、compileでは平気。
-              span(v-on:click="add2ndLine", class="add_2nd_line flipflop", v-bind:class="{'display_inline-block': !display.line2}") 　
-              input(type="text", v-model="text1", v-on:keypress="add2ndLine", placeholder="ここに文字を入れます。")
-              span(v-on:click="add2ndLine", class="add_2nd_line flipflop", v-bind:class="{'display_inline-block': !display.line2}") ＋
-              input(type="text", v-model="text2", class="flipflop", v-bind:class="{'display_inline': display.line2}", placeholder="にぎょうめ")
+              span(v-on:click="add2ndLine" class="add_2nd_line flipflop" v-bind:class="{'display_inline-block': !display.line2}") 　
+              input(type="text" v-model="text1" v-on:keypress="add2ndLine" placeholder="ここに文字を入れます。")
+              span(v-on:click="add2ndLine" class="add_2nd_line flipflop" v-bind:class="{'display_inline-block': !display.line2}") ＋
+              input(type="text" v-model="text2" class="flipflop" v-bind:class="{'display_inline': display.line2}" placeholder="にぎょうめ")
 
-            label(for="file", class="fileButton flipflop", v-bind:class="{'display_inline-block': smartphone}") がぞう
-              input#file(type="file", style="display:none", value="", v-on:change="loadFromButton")
-            input(type="button", value="これでつくる", v-on:click="edit")
-            input(type="button", value="つぶやく", v-on:click="showTweetBox", class="flipflop", v-bind:class="{'display_inline': !tweetBoxVisibility && downloadReady}")
+            label(for="file" class="fileButton flipflop" v-bind:class="{'display_inline-block': smartphone}") がぞう
+              input#file(type="file" style="display:none" value="" v-on:change="loadFromButton")
+            input(type="button" value="これでつくる" v-on:click="edit")
+            input(type="button" value="ついったーへ" v-on:click="showTweetBox" class="flipflop" v-bind:class="{'display_inline': !tweetBoxVisibility && downloadReady}")
 
-            a(href="{{imageData}}", download="{{fileName}}", class="flipflop", v-bind:class="{'display_inline-block': !msBrowser && downloadReady}") だうんろーど
+            a(href="{{imageData}}" download="{{fileName}}" class="flipflop" v-bind:class="{'display_inline-block': !msBrowser && downloadReady}") だうんろーど
             //- Microsoft Edge, Internet Explorer は download属性に対応していないのでこちら。
 
-            input(type="button", value="だうんろーど", v-on:click="msDownload", class="flipflop", v-bind:class="{'display_inline': msBrowser && downloadReady}")
+            input(type="button" value="だうんろーど" v-on:click="msDownload" class="flipflop" v-bind:class="{'display_inline': msBrowser && downloadReady}")
 
-            #tweetBox(class="flipflop", v-bind:class="{'display_block': tweetBoxVisibility}")
-              textarea#text(v-model="tweetText")
-              br
-              input(type="button", value="タグいれ", v-on:click="addTag")
-              input(type="button", value="つぶやく", v-on:click="tweet")
-              input(type="button", value="せんでん", v-on:click="addSiteUrl")
+            #tweetBox.flipflop(v-bind:class="{'display_block': tweetBoxVisibility}")
+              #preview
+                .tweetLike
+                  textarea#text(v-model="tweetText" placeholder="ここにつぶやきを入れます。")
+                  .imageBox
+                    .imageMain
+                      img(src="{{images[0]}}")
+                    .imageSubs
+                      .imageSub
+                        img(src="{{images[1]}}")
+                      .imageSub
+                        img(src="{{images[2]}}")
+                      .imageSub
+                        img(src="{{images[3]}}")
+                  p.description 「これでつくる」のたびに、四まいまでふえます。
+              input(type="button" value="つぶやく" v-on:click="tweet")
+              input(type="button" value="タグいれ" v-on:click="addTag")
+              input(type="button" value="せんでん" v-on:click="addSiteUrl")
           #setting
-            input#copyright(type="checkbox", v-model="setting.copyright.print")
+            input#copyright(type="checkbox" v-model="setting.copyright.print")
             label(for="copyright")
               //- そのままだと&がエスケープ処理されるので。
               span.copyright !{"&#x00A9;"}SEGA
               br
 
             .child
-              input#copyrightType1(type="radio", value="{{copyrightType.default}}", v-model="setting.copyright.type")
+              input#copyrightType1(type="radio" value="{{copyrightType.default}}" v-model="setting.copyright.type")
               label(for="copyrightType1") なか
               br
-              input#copyrightType2(type="radio", value="{{copyrightType.onMask}}", v-model="setting.copyright.type")
+              input#copyrightType2(type="radio" value="{{copyrightType.onMask}}" v-model="setting.copyright.type")
               label(for="copyrightType2") そと
 
-            input#mask(type="checkbox", v-model="mask.print")
+            input#mask(type="checkbox" v-model="mask.print")
             label(for="mask") ますく
               br
-            input#toJpeg(type="checkbox", v-model="toJpeg")
+            input#toJpeg(type="checkbox" v-model="toJpeg")
             label(for="toJpeg") あっしゅく
-              br
-            input#sequence(type="checkbox", v-model="sequence")
-            label(for="sequence") れんぞく
         #thanks
           p 
             | 使用フォント 
@@ -98,4 +107,4 @@ html(lang="ja")
             | 何かあれば 
             a(href="https://www.twitter.com/tasy4g") @tasy4g
             | まで。
-    script(type="text/javascript", src="js/app.js")
+    script(type="text/javascript" src="js/app.js")

@@ -62,11 +62,13 @@ var Twitter = function() {
   this.request = superagent;
   this.endPoint = 'https://asp.tasy.space/myscene/';
   this.uploadAndTweet = function(childWindow, token, text, images) {
-    self.request
+    var builder = self.request
       .post(self.endPoint + 'upload.php')
-      .field('token', token)
-      .attach('images[0]', images[0])
-      .end(function(err, res) {
+      .field('token', token);
+    for(var i = 0;i < images.length; i++) {
+      builder.attach('images['+i+']', images[i])
+    }
+    builder.end(function(err, res) {
         self.tweet(childWindow, token, text);
     });
   }
@@ -79,10 +81,11 @@ var Twitter = function() {
       // 画像が無ければそこでおしまい。
       return;
     }
+    var child = window.open('uploading.html');
     self.request
       .get(self.endPoint + 'start.php')
       .end(function(err, res){
-        self.uploadAndTweet(window.open(), res.body.token, text, images);
+        self.uploadAndTweet(child, res.body.token, text, images);
     });
   }
 }
@@ -232,6 +235,7 @@ var app = function() {
   var vm = new Vue({
     el: '#application',
     data: {
+      images         :[], // imageDataもここから取得するように変更する。
       text1          : '',
       text2          : '',
       copyrightType  : copyrightType,
@@ -246,7 +250,6 @@ var app = function() {
       imageData      : null,
       fileName       : '',
       toJpeg         : true,
-      sequence       : false,
       msBrowser      : false,
       downloadReady  : false,
       display        : {
@@ -288,7 +291,9 @@ var app = function() {
         var images = [];
         var fileType = this.fileType(this.toJpeg);
         
-        images.push(toBlob(this.canvas.toDataURL(fileType), fileType));
+        for(var i = 0; i < this.images.length; i++) {
+          images.push(toBlob(this.images[i], fileType));
+        }
         var twitter = new Twitter;
         twitter.tweetWithImages(this.tweetText, images);
       },
@@ -362,13 +367,6 @@ var app = function() {
           }
           return fileName.replace(/.jpg$/, '.png').replace(/.jpeg$/, '.png');
         };
-        var appendSequence = function() {
-          var image  = new Image();
-          image.src    = canvas.toDataURL();
-          image.width  = '640'; 
-          image.height = '360';
-          document.getElementById('control').appendChild(image);
-        };
 
         mask.setCanvas(canvas);
         mask.drawMask(mask.height);
@@ -381,12 +379,12 @@ var app = function() {
           drawCopyright(canvas, this.setting.copyright.type);
         }
 
-        if(this.sequence === true) {
-          appendSequence(event);
-        }
-
         if(this.msBrowser === false) {
           this.imageData = canvas.toDataURL(this.fileType(this.toJpeg));
+        }
+	this.images.push(canvas.toDataURL(this.fileType(this.toJpeg)));
+        if(this.images.length > 4) {
+          this.images.shift();
         }
 
         this.downloadReady = true;
