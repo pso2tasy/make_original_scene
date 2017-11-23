@@ -12,7 +12,7 @@
 - [ Python 2.7 ](https://www.python.org/download/releases/2.7/)  
 		concatが使用。手元では 2.7.14 です。  
 		コマンドラインで python -v してバージョンが出ればOK。
-- [ windows-build-tools ](https://github.com/felixrieseberg/windows-build-tools)
+- [ windows-build-tools ](https://github.com/felixrieseberg/windows-build-tools)  
 		管理者権限のPowerShellで `npm install -g --production windows-build-tools` してインストールします。
 
 ## 使いかた（Windwos 向け）
