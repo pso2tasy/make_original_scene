@@ -1,6 +1,6 @@
 {
   "name": "make_original_scene",
-  "version": "0.0.9",
+  "version": "0.1.12",
   "description": "#ssに字幕を入れてオリジナルシーンを作ってみる をお手軽にするためのWebサイト。",
   "main": "index.js",
   "scripts": {
@@ -18,11 +18,11 @@
     "concat": "^1.0.3",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
-    "gulp-jade": "^1.1.0",
     "gulp-preservetime": "^1.2.1",
+    "gulp-pug": "^4.0.1",
     "gulp-stylus": "^2.7.0",
     "gulp-watch": "^4.3.11",
-    "jade": "^1.11.0",
+    "pug": "^2.0.3",
     "stylus": "^0.53.0",
     "superagent": "^2.3.0",
     "uglify": "^0.1.5",

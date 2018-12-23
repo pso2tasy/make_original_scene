@@ -1,6 +1,6 @@
 var gulp        = require('gulp');
 var concat      = require('gulp-concat');
-var jade        = require('gulp-jade');
+var pug         = require('gulp-pug');
 var stylus      = require('gulp-stylus');
 var browserSync = require('browser-sync');
 
@@ -20,8 +20,8 @@ var config = {
     src: ['src/file/icon/**/*.ico', 'src/file/icon/**/*.png'],
     dest: 'public'
   },
-  jade: {
-    src: ['src/jade/**/*.jade', '!src/jade/**/_*/**/*.jade'],
+  pug: {
+    src: ['src/pug/**/*.pug', '!src/pug/**/_*/**/*.pug'],
     dest: 'public/',
     options: { pretty:false },
     isCompile: false
@@ -63,10 +63,10 @@ gulp.task('stylus', function() {
   browserSync.reload();
 });
 
-gulp.task('jade', function() {
-  gulp.src(config.jade.src)
-    .pipe(jade(config.jade.options))
-    .pipe(gulp.dest(config.jade.dest));
+gulp.task('pug', function() {
+  gulp.src(config.pug.src)
+    .pipe(pug(config.pug.options))
+    .pipe(gulp.dest(config.pug.dest));
   browserSync.reload();
 });
 
@@ -77,16 +77,16 @@ gulp.task('javascript', function() {
   browserSync.reload();
 });
 
-gulp.task('watch', ['staticFile', 'jade', 'stylus', 'javascript'], function() {
+gulp.task('watch', ['staticFile', 'pug', 'stylus', 'javascript'], function() {
   browserSync(config.browserSync);
-  config.jade.options.pretty = true;
+  config.pug.options.pretty = true;
   config.stylus.options.compress = false;
   gulp.watch(config.file.src,   ['staticFile']);
-  gulp.watch(config.jade.src,   ['jade']);
+  gulp.watch(config.pug.src,   ['pug']);
   gulp.watch(config.stylus.src, ['stylus']);
   gulp.watch(config.javascript.src, ['javascript']);
 });
 
 
-gulp.task('compile', ['staticFile', 'jade', 'stylus', 'javascript']);
+gulp.task('compile', ['staticFile', 'pug', 'stylus', 'javascript']);
 
