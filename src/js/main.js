@@ -57,39 +57,6 @@ var Copyright = function(canvas, print, baseline) {
   };
 };
 
-var Twitter = function() {
-  self = this;
-  this.request = superagent;
-  this.endPoint = 'https://asp.tasy.space/myscene/';
-  this.uploadAndTweet = function(childWindow, token, text, images) {
-    var builder = self.request
-      .post(self.endPoint + 'upload.php')
-      .field('token', token);
-    for(var i = 0;i < images.length; i++) {
-      builder.attach('images['+i+']', images[i])
-    }
-    builder.end(function(err, res) {
-        self.tweet(childWindow, token, text);
-    });
-  }
-  this.tweet = function(childWindow, token, text) {
-    childWindow.location.href = self.endPoint + 'tweet.php?tweet='+encodeURIComponent(text)+'&token='+token;
-  }
-
-  this.tweetWithImages = function(text, images) {
-    if(typeof images === 'undefined' || images.length == 0) {
-      // 画像が無ければそこでおしまい。
-      return;
-    }
-    var child = window.open('uploading.html');
-    self.request
-      .get(self.endPoint + 'start.php')
-      .end(function(err, res){
-        self.uploadAndTweet(child, res.body.token, text, images);
-    });
-  }
-}
-
 // http://qiita.com/uin010bm/items/150003f016287750cf34
 var toBlob = function(base64, contentType) {
   console.log('toBlob type:' + contentType);
@@ -286,25 +253,6 @@ var app = function() {
     methods: {
       loadFromButton: function(evt) {
         setImageToCanvas(evt.target.files[0]);
-      },
-      tweet: function() {
-        var images = [];
-        var fileType = this.fileType(this.toJpeg);
-        
-        for(var i = 0; i < this.images.length; i++) {
-          images.push(toBlob(this.images[i], fileType));
-        }
-        var twitter = new Twitter;
-        twitter.tweetWithImages(this.tweetText, images);
-      },
-      showTweetBox: function() {
-        this.tweetBoxVisibility = true;
-      },
-      addTag: function() {
-        this.tweetText += ' #ssに字幕を入れてオリジナルシーンを作ってみる';
-      },
-      addSiteUrl: function() {
-        this.tweetText += ' https://pso2.tasy.space/myscene';
       },
       move: function() {
         var ctx    = this.canvas.getContext('2d');

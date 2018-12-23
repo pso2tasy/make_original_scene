@@ -23,17 +23,6 @@
 4. ~~ `npm insall --msys_version=2015` ~~ いらないかも
 5. `gulp compile` すると `public` に必要なファイルが作られます。
 
-## 改造等のしかた
-`src` の下にあるファイルを好きにいじって `gulp compile` すると良いです。  
-html は jade フォルダの下に拡張子 `.jade` で置かないと反映されません。  
-css は stylus フォルダの下に拡張子 `.styl` で置かないと反映されません。  
-Javascript は js フォルダの下に拡張子 `.js` で置かないと反映されません。  
-
-これらの対応は gulpfile.js で設定されているので、gulp について調べれば簡単に変えられます。  
-HTML は [ Jade ](http://jade-lang.com/) です。HTML が分かるなら簡単に覚えられます。  
-CSS は [ Stylus ](http://stylus-lang.com/) です。CSS が分かるなら簡単に覚えられます。  
-Javascript は [ vue.js ](http://jp.vuejs.org/) を少しだけ使っています。  
-
 ## 配布について
 ライセンスは [ MIT License ](https://ja.wikipedia.org/wiki/MIT_License)です。
 

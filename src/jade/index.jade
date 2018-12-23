@@ -17,8 +17,6 @@ html(lang="ja")
             | Twitter の
             a(href!="https://twitter.com/search?q=%23ss%E3%81%AB%E5%AD%97%E5%B9%95%E3%82%92%E5%85%A5%E3%82%8C%E3%81%A6%E3%82%AA%E3%83%AA%E3%82%B8%E3%83%8A%E3%83%AB%E3%82%B7%E3%83%BC%E3%83%B3%E3%82%92%E4%BD%9C%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%8B&src=typd") #ssに字幕を入れてオリジナルシーンを作ってみる
             | タグ用画像を簡単に作るためのジェネレーターです。
-            br
-            | Twitterへ投稿は試験実装なので、何かあれば教えてください。
           p 
             | 上手くできない場合は、キャッシュを削除してみてください。
             | 時々本当に壊れてるので、その時は教えてください……。
@@ -50,31 +48,12 @@ html(lang="ja")
             label(for="file" class="fileButton flipflop" v-bind:class="{'display_inline-block': smartphone}") がぞう
               input#file(type="file" style="display:none" value="" v-on:change="loadFromButton")
             input(type="button" value="これでつくる" v-on:click="edit")
-            input(type="button" value="ついったーへ" v-on:click="showTweetBox" class="flipflop" v-bind:class="{'display_inline': !tweetBoxVisibility && downloadReady}")
 
             a(href="{{imageData}}" download="{{fileName}}" class="flipflop" v-bind:class="{'display_inline-block': !msBrowser && downloadReady}") だうんろーど
             //- Microsoft Edge, Internet Explorer は download属性に対応していないのでこちら。
 
             input(type="button" value="だうんろーど" v-on:click="msDownload" class="flipflop" v-bind:class="{'display_inline': msBrowser && downloadReady}")
 
-            #tweetBox.flipflop(v-bind:class="{'display_block': tweetBoxVisibility}")
-              #preview
-                .tweetLike
-                  textarea#text(v-model="tweetText" placeholder="ここにつぶやきを入れます。")
-                  .imageBox
-                    .imageMain
-                      img(src="{{images[0]}}")
-                    .imageSubs
-                      .imageSub
-                        img(src="{{images[1]}}")
-                      .imageSub
-                        img(src="{{images[2]}}")
-                      .imageSub
-                        img(src="{{images[3]}}")
-                  p.description 「これでつくる」のたびに、四まいまでふえます。
-              input(type="button" value="つぶやく" v-on:click="tweet")
-              input(type="button" value="タグいれ" v-on:click="addTag")
-              input(type="button" value="せんでん" v-on:click="addSiteUrl")
           #setting
             input#copyright(type="checkbox" v-model="setting.copyright.print")
             label(for="copyright")
@@ -95,10 +74,10 @@ html(lang="ja")
             input#toJpeg(type="checkbox" v-model="toJpeg")
             label(for="toJpeg") あっしゅく
         #thanks
-          p 
-            | 使用フォント 
-            a(href="http://chiphead.jp/") しねきゃぷしょん
-            | ,!{"&nbsp;"}
+          p 使用フォント 
+            br
+            | しねきゃぷしょん
+            br
             a(href="https://www.google.com/fonts/specimen/Open+Sans") Open Sans
         footer
           p ツール自体を改造したいなら
@@ -106,5 +85,5 @@ html(lang="ja")
           p 
             | 何かあれば 
             a(href="https://www.twitter.com/tasy4g") @tasy4g
-            | まで。
+            | まで。反応は鈍いです。
     script(type="text/javascript" src="js/app.js")
